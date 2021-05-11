@@ -19,14 +19,14 @@ import javax.enterprise.context.Dependent;
 @Dependent
 public class JDBCData {
     
-    private String jdbcDriver, dbURL;
+    private final String jdbcDriver = "org.mariadb.jdbc.Driver";
+    private final String dbURL = "jdbc:mariadb://localhost:3306/praktikum";
     private Connection connection = null;
     
     public JDBCData() throws SQLException, ClassNotFoundException {
         try {
-            jdbcDriver = "org.mariadb.jdbc.Driver";
             Class.forName(jdbcDriver);
-            dbURL = "jdbc:mariadb://localhost:3306/praktikum";
+            
             connection = DriverManager.getConnection(dbURL, "dba", "dba");
            
         }
@@ -34,5 +34,9 @@ public class JDBCData {
             Logger.getLogger(JDBCData.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("\nMariaDB-Treiber nicht verfügbar!\n");
         }
+    }
+    
+    private void requestInsertNewAccount(){
+    
     }
 }
