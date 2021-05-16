@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:body>
         <ui:composition template="WEB-INF/template/master.xhtml">
@@ -13,7 +14,7 @@
                         <li>
                             <h:commandLink 
                                 value="Anmelden" 
-                                action="/login.xhtml"/>
+                                action="#{loginBean.doLogout()}"/>
                         </li>
                         <li>
                             <h:commandLink 
@@ -22,7 +23,8 @@
                         </li>    
                         <li>
                             <h:commandLink 
-                                value="Start" />
+                                value="Start" 
+                                action="/start.xhtml"/>
                         </li>
                     </u1>
                 </h:form>
@@ -30,7 +32,26 @@
             
             <ui:define name="content">
                 <h:form>
-                    <h3>JSF Login Logout</h3>
+                    <h:panelGrid id = "panel" columns = "2" border = "1"
+                        cellpadding = "10" cellspacing = "1"
+                        style="margin:0px auto;" >
+   
+                        <f:facet name = "header">
+                           <h:outputText value = "Anmelden"/>
+                        </f:facet>
+                        <h:outputLabel value = "Benutzername" />
+                        <h:inputText id="username" value="#{loginBean.username}"/>
+                        <h:outputLabel value = "Passwort" />
+                        <h:inputSecret id="password" value="#{loginBean.password}"/>
+                        <f:facet name = "footer">
+                           <h:panelGroup style = "display:block; text-align:center">
+                              <h:commandButton 
+                                  id="btnLogin" 
+                                  value="Anmelden"
+                                  action="#{loginBean.doLogin()}"/>
+                           </h:panelGroup>
+                        </f:facet>
+                    </h:panelGrid>
                 </h:form>
             </ui:define>
         </ui:composition>

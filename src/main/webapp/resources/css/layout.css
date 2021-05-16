@@ -24,13 +24,13 @@ h1 {
     background-color: #D0D0D0;
 }
 
-#top_right_area {
+#top_left_area {
     position: absolute;
     top: 5px;
     left: 5px;
     width: 195px;
     height: 135px;
-    background-color: gray;
+    background-image: url('image/img_menu.jpg');
 }
 
 #menu {
@@ -41,6 +41,7 @@ h1 {
     height: 536px;
     background-color: #909090;
     text-decoration: none;
+    background-image: url('image/img_menu.jpg');
 }
 
 #banner {
@@ -51,6 +52,7 @@ h1 {
     height: 135px;
     background-color: #909090;
     background-size: cover;
+    background-image: url('image/img_menu.jpg');
 }
 
 #content {
@@ -59,7 +61,7 @@ h1 {
     left: 205px;
     width: 814px;
     height: 536px;
-    background-color: grey;
+    background-image: url('image/img_menu.jpg');
 }
 
 li {

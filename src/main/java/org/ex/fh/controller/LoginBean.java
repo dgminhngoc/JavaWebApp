@@ -48,7 +48,7 @@ public class LoginBean implements Serializable {
     public String doLogin(){
         boolean valid = true;
         
-        return "service";
+        return "home";
     }
     
     public String doLogout(){
