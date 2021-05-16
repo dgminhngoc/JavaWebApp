@@ -8,6 +8,8 @@ package org.ex.fh.controller;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.ex.fh.model.User;
+import util.JDBCBean;
 
 /**
  *
@@ -20,6 +22,12 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
     private String message;
+    
+    private JDBCBean jdbcBean;
+    
+    public LoginBean() {
+        jdbcBean = new JDBCBean();
+    }
 
     public String getUsername() {
         return username;
@@ -46,12 +54,20 @@ public class LoginBean implements Serializable {
     }
     
     public String doLogin(){
-        boolean valid = true;
+        User user = null;
         
-        return "home";
+        if (jdbcBean != null) {
+             user = jdbcBean.checkAccountValid(username, password);
+             
+             if (user != null) {
+                 return "/hallo.xhtml";
+             }
+        }
+        
+        return "/start.xhtml";
     }
     
     public String doLogout(){
-        return "login";
+        return "/start.xhtml";
     }
 }

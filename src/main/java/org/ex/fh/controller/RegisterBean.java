@@ -8,6 +8,9 @@ package org.ex.fh.controller;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.ex.fh.model.Account;
+import org.ex.fh.model.User;
+import util.JDBCBean;
 
 /**
  *
@@ -24,6 +27,12 @@ public class RegisterBean implements Serializable {
     private String lastName;
     private String telNumber;
     private String email;
+    
+    private JDBCBean jdbcBean;
+    
+    public RegisterBean() {
+        jdbcBean = new JDBCBean();
+    }
 
     public String getUsername() {
         return username;
@@ -74,6 +83,27 @@ public class RegisterBean implements Serializable {
     }
 
     public String doRegister(){
-        return "login";
+        Account account = jdbcBean.getAccountFromJDBC(username, password);
+        
+        //account is already created
+        if (account != null) {
+            return "start";
+        }
+        //account doesnt exist, should be created
+        else {
+            account = new Account();
+            account.setAccName(username);
+            account.setAccPassword(password);
+            
+            User user = new User();
+            user.setUserFirstName(firstName);
+            user.setUserLastName(lastName);
+            user.setUserTelNr(telNumber);
+            user.setUserEmail(email);
+            
+            jdbcBean.createAccountAndUser(user, account);
+            
+            return "/login.xhtml";
+        }   
     }
 }

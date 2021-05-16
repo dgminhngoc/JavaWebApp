@@ -12,42 +12,21 @@
                     <u1>
                         <li>
                             <h:commandLink 
-                                value="Anmelden" 
+                                value="Start" 
+                                action="/start.xhtml"/>
+                        </li>
+                        <li>
+                            <h:commandLink 
+                                value="Abmelden" 
                                 action="/login.xhtml"/>
-                        </li>
-                        <li>
-                            <h:commandLink 
-                                value="Registieren" 
-                                action="/register.xhtml"/>
-                        </li>    
-                        <li>
-                            <h:commandLink 
-                                value="Start" />
-                        </li>
+                        </li>                 
                     </u1>
                 </h:form>
             </ui:define>
             
             <ui:define name="content">
                 <h:form>
-                    <h3>JSF Login Logout</h3>
-                    <h:outputText value="Benutzername" />
-                    <h:inputText 
-                        id="username" 
-                        value="#{loginBean.username}"/>
-                    <h:message for="username"/>
-                    <br></br><br></br>
-
-                    <h:outputText value="Passwort" />
-                    <h:inputSecret 
-                        id="password" 
-                        value="#{loginBean.password}"/>
-                    <h:message for="password"></h:message>
-                    <br></br><br></br>
-
-                    <h:commandButton 
-                        action="#{loginBean.doLogin}"
-                            value="Anmelden"/>
+                    
                 </h:form>
             </ui:define>
         </ui:composition>

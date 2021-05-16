@@ -52,8 +52,9 @@ public class User implements Serializable {
     private String userLastName;
     @Basic(optional = false)
     @NotNull
+    @Size(min = 1, max = 11)
     @Column(name = "USER_TEL_NR")
-    private int userTelNr;
+    private String userTelNr;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
@@ -71,7 +72,7 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(Integer userId, String userFirstName, String userLastName, int userTelNr, String userEmail, int fkAccId) {
+    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail, int fkAccId) {
         this.userId = userId;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
@@ -104,11 +105,11 @@ public class User implements Serializable {
         this.userLastName = userLastName;
     }
 
-    public int getUserTelNr() {
+    public String getUserTelNr() {
         return userTelNr;
     }
 
-    public void setUserTelNr(int userTelNr) {
+    public void setUserTelNr(String userTelNr) {
         this.userTelNr = userTelNr;
     }
 
