@@ -6,8 +6,10 @@
 package org.ex.fh.controller;
 
 import java.io.Serializable;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.ex.fh.model.User;
 import util.JDBCBean;
 
@@ -53,6 +55,7 @@ public class LoginBean implements Serializable {
         this.message = message;
     }
     
+    
     public String doLogin(){
         User user = null;
         
@@ -60,6 +63,11 @@ public class LoginBean implements Serializable {
              user = jdbcBean.checkAccountValid(username, password);
              
              if (user != null) {
+                 String message = String.format("Hallo Benutzer\n%s!"
+                         + "\nWir haben heute tolle Angebote!", user.getUserLastName());
+                 FacesMessage fmsg = new FacesMessage(message);
+                 FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
+                 
                  return "/hallo.xhtml";
              }
         }
@@ -68,6 +76,12 @@ public class LoginBean implements Serializable {
     }
     
     public String doLogout(){
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext.getExternalContext().invalidateSession();
+        facesContext.addMessage("startForm", 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                        "Auf Wiedersehen!", "Bis zum nächsten Mal!"));
+        
         return "/start.xhtml";
     }
 }

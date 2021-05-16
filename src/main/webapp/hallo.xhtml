@@ -18,15 +18,17 @@
                         <li>
                             <h:commandLink 
                                 value="Abmelden" 
-                                action="/login.xhtml"/>
+                                action="#{loginBean.doLogout()}"/>
                         </li>                 
                     </u1>
                 </h:form>
             </ui:define>
             
             <ui:define name="content">
-                <h:form>
-                    
+                <h:form id="halloForm" prependId="false">
+                    <h:message for="halloForm"
+                               showSummary="true"
+                               showDetail="false"/>
                 </h:form>
             </ui:define>
         </ui:composition>

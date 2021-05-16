@@ -23,7 +23,11 @@
                 </h:form>
             </ui:define>
             <ui:define name="content">
-                Hallo, im Shop!
+                <h:form id="startForm" prependId="false">
+                    <h:message for="startForm"
+                               showSummary="true"
+                               showDetail="false"/>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>
