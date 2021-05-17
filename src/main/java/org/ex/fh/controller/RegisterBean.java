@@ -6,8 +6,10 @@
 package org.ex.fh.controller;
 
 import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.User;
 import util.JDBCBean;
@@ -87,7 +89,11 @@ public class RegisterBean implements Serializable {
         
         //account is already created
         if (account != null) {
-            return "start";
+            String message = "Das Konto ist bereits verfügbar";
+            FacesMessage fmsg = new FacesMessage(message);
+            FacesContext.getCurrentInstance().addMessage("startForm", fmsg);
+            
+            return "/start.xhtml";
         }
         //account doesnt exist, should be created
         else {

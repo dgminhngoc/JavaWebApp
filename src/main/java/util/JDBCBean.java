@@ -205,5 +205,5 @@ public class JDBCBean {
             String exception = ex.getMessage();
             Logger.getLogger(JDBCBean.class.getName()).log(Level.SEVERE, ex.getMessage(), ex);
         }
-    }
+        }
 }
