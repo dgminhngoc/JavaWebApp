@@ -12,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.User;
-import util.JDBCBean;
 
 /**
  *
@@ -30,10 +29,9 @@ public class RegisterBean implements Serializable {
     private String telNumber;
     private String email;
     
-    private JDBCBean jdbcBean;
     
     public RegisterBean() {
-        jdbcBean = new JDBCBean();
+        // do nothing
     }
 
     public String getUsername() {
@@ -84,32 +82,7 @@ public class RegisterBean implements Serializable {
         this.email = email;
     }
 
-    public String doRegister(){
-        Account account = jdbcBean.getAccountFromJDBC(username, password);
-        
-        //account is already created
-        if (account != null) {
-            String message = "Das Konto ist bereits verfügbar";
-            FacesMessage fmsg = new FacesMessage(message);
-            FacesContext.getCurrentInstance().addMessage("startForm", fmsg);
-            
-            return "/start.xhtml";
-        }
-        //account doesnt exist, should be created
-        else {
-            account = new Account();
-            account.setAccName(username);
-            account.setAccPassword(password);
-            
-            User user = new User();
-            user.setUserFirstName(firstName);
-            user.setUserLastName(lastName);
-            user.setUserTelNr(telNumber);
-            user.setUserEmail(email);
-            
-            jdbcBean.createAccountAndUser(user, account);
-            
-            return "/login.xhtml";
-        }   
+    public String doRegister(){ 
+        return "/login.xhtml";  
     }
 }

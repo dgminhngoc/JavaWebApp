@@ -3,11 +3,11 @@
   <!-- Define Persistence Unit -->
   <persistence-unit name="my_persistence_unit" transaction-type="JTA">
     <jta-data-source>jdbc/praktikum</jta-data-source>
-    <class>org.ex.fh.model.User</class>
-    <class>org.ex.fh.model.Service</class>
-    <class>org.ex.fh.model.Bill</class>
-    <class>org.ex.fh.model.Account</class>
-    <class>org.ex.fh.model.Appointment</class>
-    <class>org.ex.fh.model.BillDetail</class>
+    <class>org.ex.fh.model.Store</class>
+    <class>org.ex.fh.model.Product</class>
+    <class>org.ex.fh.model.Comment</class>
+    <class>org.ex.fh.model.Deal</class>
+    <class>org.ex.fh.model.ProductCategory</class>
+    <class>org.ex.fh.model.Worker</class>
   </persistence-unit>
 </persistence>

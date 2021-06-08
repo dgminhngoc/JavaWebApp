@@ -31,12 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Account.findByAccPassword", query = "SELECT a FROM Account a WHERE a.accPassword = :accPassword")})
 public class Account implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ACC_ID")
-    private Integer accId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -47,6 +41,13 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ACC_PASSWORD")
     private String accPassword;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ACC_ID")
+    private Integer accId;
 
     public Account() {
     }
@@ -109,5 +110,4 @@ public class Account implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Account[ accId=" + accId + " ]";
     }
-    
 }

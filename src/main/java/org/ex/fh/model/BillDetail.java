@@ -34,6 +34,20 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BillDetail.findByBildDetailDate", query = "SELECT b FROM BillDetail b WHERE b.bildDetailDate = :bildDetailDate")})
 public class BillDetail implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FK_BILL_ID")
+    private int fkBillId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FK_PRODUCT_ID")
+    private int fkProductId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "BILD_DETAIL_DATE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date bildDetailDate;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -42,17 +56,8 @@ public class BillDetail implements Serializable {
     private Integer billDetailId;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FK_BILL_ID")
-    private int fkBillId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "FK_SERVICE_ID")
     private int fkServiceId;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BILD_DETAIL_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date bildDetailDate;
 
     public BillDetail() {
     }
@@ -99,6 +104,14 @@ public class BillDetail implements Serializable {
     public void setBildDetailDate(Date bildDetailDate) {
         this.bildDetailDate = bildDetailDate;
     }
+    
+    public int getFkProductId() {
+        return fkProductId;
+    }
+
+    public void setFkProductId(int fkProductId) {
+        this.fkProductId = fkProductId;
+    }
 
     @Override
     public int hashCode() {
@@ -124,5 +137,4 @@ public class BillDetail implements Serializable {
     public String toString() {
         return "org.ex.fh.model.BillDetail[ billDetailId=" + billDetailId + " ]";
     }
-    
 }

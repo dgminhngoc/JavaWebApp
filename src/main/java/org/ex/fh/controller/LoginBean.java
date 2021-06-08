@@ -10,8 +10,11 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import org.ex.fh.model.Account;
 import org.ex.fh.model.User;
-import util.JDBCBean;
+import util.DbAPIBean;
+import util.JSPUtil;
 
 /**
  *
@@ -24,11 +27,12 @@ public class LoginBean implements Serializable {
     private String username;
     private String password;
     private String message;
-    
-    private JDBCBean jdbcBean;
+        
+    @Inject
+    private DbAPIBean dbAPIBean;
     
     public LoginBean() {
-        jdbcBean = new JDBCBean();
+        // do nothing
     }
 
     public String getUsername() {
@@ -57,22 +61,29 @@ public class LoginBean implements Serializable {
     
     
     public String doLogin(){
-        User user = null;
-        
-        if (jdbcBean != null) {
-             user = jdbcBean.checkAccountValid(username, password);
-             
-             if (user != null) {
-                 String message = String.format("Hallo Benutzer\n%s!"
-                         + "\nWir haben heute tolle Angebote!", user.getUserLastName());
-                 FacesMessage fmsg = new FacesMessage(message);
-                 FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
-                 
-                 return "/hallo.xhtml";
-             }
+        boolean isAccountValid = false;
+        Account account = dbAPIBean.findAccount(username);
+        if (account != null && account.getAccId() != null) {
+            if(account.getAccName().equals(username)
+                    && account.getAccPassword().equals(password)) {
+                isAccountValid = true;
+            }
         }
-        
-        return "/start.xhtml";
+       
+        if(isAccountValid) {
+            User user = dbAPIBean.findUser(account);
+           
+            String message = String.format("Hallo Benutzer\n%s!"
+                     + "\nWir haben heute tolle Angebote!", user.getUserLastName());
+            FacesMessage fmsg = new FacesMessage(message);
+            FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
+
+            return "/hallo.xhtml";
+        }
+        else {
+            JSPUtil.addErrorMessageForComponent("LOG", "Überprüfen Sie Ihre Login-Daten!");
+            return "/start.xhtml";
+        }
     }
     
     public String doLogout(){

@@ -33,12 +33,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bill.findByFkUserId", query = "SELECT b FROM Bill b WHERE b.fkUserId = :fkUserId")})
 public class Bill implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BILL_ID")
-    private Integer billId;
     @Basic(optional = false)
     @NotNull
     @Column(name = "BILL_DATE")
@@ -48,6 +42,13 @@ public class Bill implements Serializable {
     @NotNull
     @Column(name = "FK_USER_ID")
     private int fkUserId;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "BILL_ID")
+    private Integer billId;
 
     public Bill() {
     }
@@ -110,5 +111,4 @@ public class Bill implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Bill[ billId=" + billId + " ]";
     }
-    
 }

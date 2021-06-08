@@ -34,12 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByFkAccId", query = "SELECT u FROM User u WHERE u.fkAccId = :fkAccId")})
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "USER_ID")
-    private Integer userId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -64,6 +58,13 @@ public class User implements Serializable {
     @NotNull
     @Column(name = "FK_ACC_ID")
     private int fkAccId;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "USER_ID")
+    private Integer userId;
 
     public User() {
     }
@@ -153,5 +154,4 @@ public class User implements Serializable {
     public String toString() {
         return "org.ex.fh.model.User[ userId=" + userId + " ]";
     }
-    
 }
