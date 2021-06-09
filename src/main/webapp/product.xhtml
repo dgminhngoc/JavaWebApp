@@ -2,18 +2,53 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
+    
     <h:body>
         <ui:composition template="WEB-INF/template/master.xhtml">
+            <ui:define name="menu">
+                <h:form>
+                    
+                </h:form>
+            </ui:define>
             <ui:define name="content">
-                <h:dataTable value="#{serviceBean.listService}" var="listService">
-                    <h:column>
-                        #{listService.serviceName}
-                    </h:column>
-                </h:dataTable>
+                <h:form>
+                    Category
+                    <br/>
+                    <p:outputLabel for="menu"/>
+                    <p:selectOneMenu id="menu" value="#{productBean.selectedStrCategory}">
+                        <f:selectItems value="#{productBean.listStrCategory}"/>  
+                    </p:selectOneMenu>
+                    <br/>
+                    <p:commandButton value="Load Data" action="#{productBean.reloadData()}">
+                        <p:ajax update="products"/>
+                    </p:commandButton>
+                    <p:commandButton value="Add to cart" action="#{productBean.addToCart()}"/>     
+                    <br/>
+                    <h:dataTable id="products" value="#{productBean.listProductPurchase}" var="productPurchase">
+                        <h:column>    				
+                           <f:facet name="header">Name</f:facet>    				
+                           #{productPurchase.product.productName}
+                        </h:column>
+                        <h:column>    				
+                           <f:facet name="header">Description</f:facet>    				
+                           #{productPurchase.product.productDescription}
+                        </h:column>
+                        <h:column>
+                           <f:facet name="header">Price</f:facet>
+                           #{productPurchase.product.productPrice}
+                        </h:column>
+                        <h:column>
+                           <f:facet name="header">Amount</f:facet>
+                           <h:inputText id="numberOfItem" value="#{productPurchase.numberOfItem}"/>
+                        </h:column>  
+                     </h:dataTable>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

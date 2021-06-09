@@ -14,6 +14,7 @@ import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.Product;
+import org.ex.fh.model.ProductCategory;
 import org.ex.fh.model.User;
 
 /**
@@ -23,17 +24,25 @@ import org.ex.fh.model.User;
 @Named(value = "dbAPIBean")
 @Dependent
 public class DbAPIBean {
-    
-    private List<Product> listService;
-    
+        
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
     
-    public List<Product> getListProduct() {
+    public List<Product> findListProduct(ProductCategory productCategory) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
-        TypedQuery<Product> query = entityManager.createNamedQuery("Product.findall", Product.class);
-        listService = query.getResultList();
-        return listService;
+        TypedQuery<Product> query = entityManager
+                .createNamedQuery("Product.findByFkProductCateId", Product.class);
+        query.setParameter("fkProductCateId", productCategory.getProductCatId());
+        List<Product> listProduct = query.getResultList();
+        return listProduct;
+    }
+    
+    public List<ProductCategory> getListProductCategory() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<ProductCategory> query = entityManager
+                .createNamedQuery("ProductCategory.findAll", ProductCategory.class);
+        List<ProductCategory> listProductCategory = query.getResultList();
+        return listProductCategory;
     }
     
     public Account findAccount(String username) {
@@ -41,10 +50,9 @@ public class DbAPIBean {
         try {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
         
-            TypedQuery<Account> query =
-                    entityManager.createQuery("SELECT s FROM Account a "
-                    + "WHERE a.ACC_NAME = :username", Account.class);
-            query.setParameter("username", username);
+            TypedQuery<Account> query =entityManager
+                    .createNamedQuery("Account.findByAccName", Account.class);
+            query.setParameter("accName", username);
 
             account = query.getSingleResult();
             
@@ -63,10 +71,9 @@ public class DbAPIBean {
             EntityManager entityManager = entityManagerFactory.createEntityManager();
         
             TypedQuery<User> query =
-                    entityManager.createQuery("SELECT s FROM User user "
-                    + "WHERE user.FK_ACC_ID = :acc_id", User.class);
-            query.setParameter("acc_id", account.getAccId());
-
+                    entityManager.createNamedQuery("User.findByFkAccId", User.class);
+            query.setParameter("fkAccId", account.getAccId());
+            
             user = query.getSingleResult();
             
             //account erhalten

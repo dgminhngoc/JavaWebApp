@@ -6,9 +6,9 @@
 package org.ex.fh.controller;
 
 import java.io.Serializable;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.User;
