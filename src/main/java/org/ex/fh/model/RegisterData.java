@@ -5,18 +5,24 @@
  */
 package org.ex.fh.model;
 
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author dgmin
  */
 public class RegisterData {
-    
+    @Size(max = 20)
     private String username;
+    @Size(max = 20)
     private String password;
-    
+    @Size(max = 20)
     private String firstName;
+    @Size(max = 20)
     private String lastName;
+    @Size(max = 11)
     private String telNumber;
+    @Size(max = 25)
     private String email;
     
     public RegisterData() {

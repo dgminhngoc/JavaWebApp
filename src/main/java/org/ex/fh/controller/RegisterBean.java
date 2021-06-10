@@ -48,7 +48,9 @@ public class RegisterBean implements Serializable {
     }
 
     public String doRegister(){
-        dbAPIBean.insertRegisterData(data);
-        return "/login.xhtml";  
+        System.out.println("doRegister");
+        boolean success = dbAPIBean.insertRegisterData(data);
+        
+        return success ? "/login.xhtml" : "/start.xhtml";  
     }
 }

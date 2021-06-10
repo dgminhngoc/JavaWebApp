@@ -89,6 +89,13 @@ public class User implements Serializable {
         this.userEmail = userEmail;
         this.fkAccId = fkAccId;
     }
+    
+    public User(String userFirstName, String userLastName, String userTelNr, String userEmail) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userTelNr = userTelNr;
+        this.userEmail = userEmail;
+    }
 
     public Integer getUserId() {
         return userId;

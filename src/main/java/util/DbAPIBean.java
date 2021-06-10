@@ -7,12 +7,14 @@ package util;
 
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.enterprise.context.Dependent;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
+import javax.transaction.UserTransaction;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.Bill;
 import org.ex.fh.model.BillDetail;
@@ -32,6 +34,9 @@ public class DbAPIBean {
         
     @PersistenceUnit
     private EntityManagerFactory entityManagerFactory;
+    
+    @Resource
+    private UserTransaction userTransaction; 
     
     public List<Product> findListProduct(ProductCategory productCategory) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
@@ -113,96 +118,55 @@ public class DbAPIBean {
     
     public void insertPurchase(List<ProductPurchase> listProductPurchase) {
         if (listProductPurchase != null && listProductPurchase.size() > 0) {
-           Date date = new Date();
-           insertBill(new Bill(date, AppInfo.getInstance().getUser().getUserId()));
-           Bill bill = findBill(date);
-           if(bill != null) {
-               insertBillDetail(bill,listProductPurchase);
-           }
-        }
-    }
-    
-    private void insertBill(Bill bill) {      
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(bill);
-        entityManager.getTransaction().commit();
-        entityManager.close();  
-    }
-    
-    private void insertBillDetail(Bill bill, List<ProductPurchase> listProductPurchase) {
-        if (listProductPurchase!= null && listProductPurchase.size() > 0) {
-            for(ProductPurchase productPurchase : listProductPurchase) {
+            Date date = new Date();
+            Bill bill = new Bill(date, AppInfo.getInstance().getUser().getUserId());
+            try {
                 EntityManager entityManager = entityManagerFactory.createEntityManager();
-                entityManager.getTransaction().begin();
-                entityManager.persist(new BillDetail(productPurchase.getNumberOfItem(), 
+                userTransaction.begin();
+                entityManager.joinTransaction();
+                entityManager.persist(bill);
+                for(ProductPurchase productPurchase : listProductPurchase) {       
+                    entityManager.persist(new BillDetail(productPurchase.getNumberOfItem(), 
                         bill.getBillId(), 
                         productPurchase.getProduct().getProductId(), 
-                        bill.getBillDate()));
-                entityManager.getTransaction().commit();
-                entityManager.close();
-            }
-        }
-    }
-    
-    public void insertRegisterData(RegisterData data) {
-        if (data != null) {
-            insertAccount(new Account(data.getUsername(), data.getPassword()));
-            Account account = findAccount(data.getUsername());
-            //insert account successful
-            if (account != null && account.getAccName().equals(data.getUsername())) {
-                insertUser(new User(data.getFirstName(), 
-                        data.getLastName(), 
-                        data.getTelNumber(), 
-                        data.getEmail(), 
-                        account.getAccId()));
-
-                User user = findUser(account);
-                //insert user successful
-                if (user != null && user.getUserLastName().equals(data.getLastName())) {
-                    //notify success
+                        date));
                 }
-                // insert user error !!!
-                else {
-                    //notify error
-                    removeAccount(account);
-                }
-            }
-            // insert account error !!!
-            else {
-                //notify error
+                userTransaction.commit();      
+            } 
+            catch (Exception e) {
+                //do nothing
             }
         }
     }
     
-    private void removeAccount(Account account) {
-        if(account != null) {
+    public boolean insertRegisterData(RegisterData data) {
+        boolean success = false;
+        try {
+            Account account = new Account(data.getUsername(), data.getPassword());
+            User user = new User(data.getFirstName(), 
+                    data.getLastName(), 
+                    data.getTelNumber(), 
+                    data.getEmail());
             EntityManager entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
-            Account rmAccount = entityManager.find(Account.class, account.getAccId());
-            entityManager.remove(rmAccount);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        }
-    }
-    
-    private void insertAccount(Account account) {
-        if(account != null) {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
+            userTransaction.begin();
+            entityManager.joinTransaction();
             entityManager.persist(account);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        }
-    }
-    
-    private void insertUser(User user){
-        if(user != null) {
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            entityManager.getTransaction().begin();
+            user.setFkAccId(account.getAccId());
             entityManager.persist(user);
-            entityManager.getTransaction().commit();
-            entityManager.close();
+
+            userTransaction.commit();
+            
+            success = true;
+        } 
+        catch (Exception e) {
+            try {
+                userTransaction.rollback();
+            } 
+            catch (Exception ex) {
+                //do nothing
+            }
         }
-    } 
+      
+        return success;
+    }
 }
