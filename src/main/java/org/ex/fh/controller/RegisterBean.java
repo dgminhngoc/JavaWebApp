@@ -6,12 +6,16 @@
 package org.ex.fh.controller;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import org.ex.fh.model.Account;
+import org.ex.fh.model.RegisterData;
 import org.ex.fh.model.User;
+import util.DbAPIBean;
 
 /**
  *
@@ -21,68 +25,30 @@ import org.ex.fh.model.User;
 @SessionScoped
 public class RegisterBean implements Serializable {
     
-    private String username;
-    private String password;
+    private RegisterData data;
     
-    private String firstName;
-    private String lastName;
-    private String telNumber;
-    private String email;
-    
+    @Inject
+    private DbAPIBean dbAPIBean;
     
     public RegisterBean() {
         // do nothing
     }
-
-    public String getUsername() {
-        return username;
+    
+    @PostConstruct
+    private void init(){
+        data = new RegisterData();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public RegisterData getData() {
+        return data;
     }
 
-    public String getPassword() {
-        return password;
+    public void setData(RegisterData data) {
+        this.data = data;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getTelNumber() {
-        return telNumber;
-    }
-
-    public void setTelNumber(String telNumber) {
-        this.telNumber = telNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String doRegister(){ 
+    public String doRegister(){
+        dbAPIBean.insertRegisterData(data);
         return "/login.xhtml";  
     }
 }

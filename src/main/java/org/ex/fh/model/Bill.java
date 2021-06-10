@@ -56,6 +56,11 @@ public class Bill implements Serializable {
     public Bill(Integer billId) {
         this.billId = billId;
     }
+    
+    public Bill(Date billDate, int fkUserId) {
+        this.billDate = billDate;
+        this.fkUserId = fkUserId;
+    }
 
     public Bill(Integer billId, Date billDate, int fkUserId) {
         this.billId = billId;

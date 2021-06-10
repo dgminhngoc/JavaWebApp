@@ -35,17 +35,17 @@
                            <h:outputText value = "Registieren"/>
                         </f:facet>
                         <h:outputLabel value = "Benutzername" />
-                        <h:inputText id="username" value="#{registerBean.username}"/>
+                        <h:inputText id="username" value="#{registerBean.data.username}"/>
                         <h:outputLabel value = "Passwort" />
-                        <h:inputSecret id="password" value="#{registerBean.password}"/>
+                        <h:inputSecret id="password" value="#{registerBean.data.password}"/>
                         <h:outputLabel value = "Vorname" />
-                        <h:inputText id="firstname" value="#{registerBean.firstName}"/>
+                        <h:inputText id="firstname" value="#{registerBean.data.firstName}"/>
                         <h:outputLabel value = "Nachname" />
-                        <h:inputText id="lastname" value="#{registerBean.lastName}"/>
+                        <h:inputText id="lastname" value="#{registerBean.data.lastName}"/>
                         <h:outputLabel value = "Tel.nummer" />
-                        <h:inputText id="telnumber" value="#{registerBean.telNumber}"/>
+                        <h:inputText id="telnumber" value="#{registerBean.data.telNumber}"/>
                         <h:outputLabel value = "Email" />
-                        <h:inputText id="email" value="#{registerBean.email}"/>
+                        <h:inputText id="email" value="#{registerBean.data.email}"/>
                         <f:facet name = "footer">
                            <h:panelGroup style = "display:block; text-align:center">
                               <h:commandButton 

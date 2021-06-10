@@ -68,7 +68,7 @@ public class ProductCart {
     }
     
     public void purchase() {
-        dbAPIBean.uploadBill(listProductPurchase);
+        dbAPIBean.insertPurchase(listProductPurchase);
         listProductPurchase.clear();
     }
 

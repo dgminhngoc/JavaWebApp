@@ -55,6 +55,11 @@ public class Account implements Serializable {
     public Account(Integer accId) {
         this.accId = accId;
     }
+    
+    public Account(String accName, String accPassword) {
+        this.accName = accName;
+        this.accPassword = accPassword;
+    }
 
     public Account(Integer accId, String accName, String accPassword) {
         this.accId = accId;
