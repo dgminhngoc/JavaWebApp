@@ -9,5 +9,6 @@
     <class>org.ex.fh.model.Deal</class>
     <class>org.ex.fh.model.ProductCategory</class>
     <class>org.ex.fh.model.Worker</class>
+    <class>org.ex.fh.model.BillDetail</class>
   </persistence-unit>
 </persistence>

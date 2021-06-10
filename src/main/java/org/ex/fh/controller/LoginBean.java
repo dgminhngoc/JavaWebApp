@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.User;
+import util.AppInfo;
 import util.DbAPIBean;
 import util.JSPUtil;
 
@@ -72,6 +73,9 @@ public class LoginBean implements Serializable {
        
         if(isAccountValid) {
             User user = dbAPIBean.findUser(account);
+            
+            AppInfo.getInstance().setAccount(account);
+            AppInfo.getInstance().setUser(user);
            
             String message = String.format("Hallo Benutzer\n%s!"
                      + "\nWir haben heute tolle Angebote!", user.getUserLastName());
@@ -87,6 +91,8 @@ public class LoginBean implements Serializable {
     }
     
     public String doLogout(){
+        AppInfo.getInstance().clearData();
+                
         FacesContext facesContext = FacesContext.getCurrentInstance();
         facesContext.getExternalContext().invalidateSession();
         facesContext.addMessage("startForm", 

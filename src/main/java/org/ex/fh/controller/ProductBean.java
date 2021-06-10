@@ -16,6 +16,7 @@ import org.ex.fh.model.Product;
 import org.ex.fh.model.ProductCategory;
 import org.ex.fh.model.ProductPurchase;
 import util.DbAPIBean;
+import util.ProductCart;
 
 /**
  *
@@ -84,7 +85,8 @@ public class ProductBean implements Serializable {
     }
     
     public void addToCart() {
-    
+        ProductCart.getInstance().addToCart(listProductPurchase);
+        listProductCategory.clear();
     }
 
     public List<ProductCategory> getListProductCategory() { 

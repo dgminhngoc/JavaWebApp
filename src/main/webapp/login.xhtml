@@ -12,12 +12,7 @@
                     <u1>
                         <li>
                             <h:commandLink 
-                                value="Anmelden" 
-                                action="#{loginBean.doLogout()}"/>
-                        </li>
-                        <li>
-                            <h:commandLink 
-                                value="Registieren" 
+                                value="Register" 
                                 action="/register.xhtml"/>
                         </li>    
                         <li>
@@ -36,17 +31,17 @@
                         style="margin:0px auto;" >
    
                         <f:facet name = "header">
-                           <h:outputText value = "Anmelden"/>
+                           <h:outputText value = "Login"/>
                         </f:facet>
-                        <h:outputLabel value = "Benutzername" />
+                        <h:outputLabel value = "Username" />
                         <h:inputText id="username" value="#{loginBean.username}"/>
-                        <h:outputLabel value = "Passwort" />
+                        <h:outputLabel value = "Password" />
                         <h:inputSecret id="password" value="#{loginBean.password}"/>
                         <f:facet name = "footer">
                            <h:panelGroup style = "display:block; text-align:center">
                               <h:commandButton 
                                   id="btnLogin" 
-                                  value="Anmelden"
+                                  value="Login"
                                   action="#{loginBean.doLogin()}"/>
                            </h:panelGroup>
                         </f:facet>

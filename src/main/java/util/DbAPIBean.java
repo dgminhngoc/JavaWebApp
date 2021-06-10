@@ -15,6 +15,7 @@ import javax.persistence.TypedQuery;
 import org.ex.fh.model.Account;
 import org.ex.fh.model.Product;
 import org.ex.fh.model.ProductCategory;
+import org.ex.fh.model.ProductPurchase;
 import org.ex.fh.model.User;
 
 /**
@@ -83,5 +84,11 @@ public class DbAPIBean {
         }
         
         return user;
+    }
+    
+    public void uploadBill(List<ProductPurchase> listProductPurchases) {
+        if (listProductPurchases != null && listProductPurchases.size() > 0) {
+            
+        }
     }
 }

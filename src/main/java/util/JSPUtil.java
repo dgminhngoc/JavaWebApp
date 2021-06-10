@@ -22,8 +22,8 @@ public class JSPUtil {
         FacesContext.getCurrentInstance().addMessage(component, fmsg);
     }
     
-    public static void addSuccessMessage(String message) {
-        FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_INFO, message, message);
+    public static void addSuccessMessage(String msgSummary, String msgDetail) {
+        FacesMessage fmsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msgSummary, msgSummary);
         FacesContext.getCurrentInstance().addMessage("successInfo", fmsg);
     }
 }
