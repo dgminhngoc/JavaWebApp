@@ -35,32 +35,38 @@
                            <h:outputText value = "Registieren"/>
                         </f:facet>
                         <h:outputLabel value = "Benutzername" />
-                        <h:inputText id="username" value="#{registerBean.data.username}">
+                        <h:inputText id="username" value="#{registerBean.account.accName}">
                             <f:validateRequired for="username"/>
-                            <f:validateLength minimum="5" maximum="20" for="username"/>
+                            <f:validateLength minimum="5" maximum="20" for="username"/>                   
                         </h:inputText>
                         <h:outputLabel value = "Passwort" />
-                        <h:inputSecret id="password" value="#{registerBean.data.password}">
+                        <h:inputSecret id="password" value="#{registerBean.account.accPassword}">
                             <f:validateRequired for="password"/>
                             <f:validateLength minimum="5" maximum="20" for="password"/>
                         </h:inputSecret>
                         <h:outputLabel value = "Vorname" />
-                        <h:inputText id="firstname" value="#{registerBean.data.firstName}">
-                            <f:validateRequired for="firstname"/>
-                            <f:validateLength minimum="5" maximum="20" for="firstname"/>
+                        <h:inputText    id="firstname" 
+                                        value="#{registerBean.user.userFirstName}"
+                                        required="true"
+                                        requiredMessage="First name missing/incorrect!!!"
+                                        validator="#{registerBean.validateName}">   
                         </h:inputText>
                         <h:outputLabel value = "Nachname" />
-                        <h:inputText id="lastname" value="#{registerBean.data.lastName}">
-                            <f:validateRequired for="lastname"/>
-                            <f:validateLength minimum="5" maximum="20" for="lastname"/>
+                        <h:inputText    id="lastname" 
+                                        value="#{registerBean.user.userLastName}"
+                                        required="true"
+                                        requiredMessage="Last name missing/incorrect!!!"
+                                        validator="#{registerBean.validateName}">                       
                         </h:inputText>
                         <h:outputLabel value = "Tel.nummer" />
-                        <h:inputText id="telnumber" value="#{registerBean.data.telNumber}">
-                            <f:validateRequired for="telnumber"/>
-                            <f:validateLength minimum="9" maximum="11" for="telnumber"/>
+                        <h:inputText    id="telnumber" 
+                                        value="#{registerBean.user.userTelNr}"
+                                        required="true"
+                                        requiredMessage="Tel.number missing/incorrect!!!"
+                                        validator="#{registerBean.validateTelNumber}">               
                         </h:inputText>
                         <h:outputLabel value = "Email" />
-                        <h:inputText id="email" value="#{registerBean.data.email}">
+                        <h:inputText id="email" value="#{registerBean.user.userEmail}">
                             <f:validateRequired for="email"/>
                             <f:validateLength minimum="5" maximum="25" for="email"/>
                         </h:inputText>

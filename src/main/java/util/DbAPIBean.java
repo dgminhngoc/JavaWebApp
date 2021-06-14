@@ -21,7 +21,6 @@ import org.ex.fh.model.BillDetail;
 import org.ex.fh.model.Product;
 import org.ex.fh.model.ProductCategory;
 import org.ex.fh.model.ProductPurchase;
-import org.ex.fh.model.RegisterData;
 import org.ex.fh.model.User;
 
 /**
@@ -134,39 +133,43 @@ public class DbAPIBean {
                 userTransaction.commit();      
             } 
             catch (Exception e) {
-                //do nothing
+                try {            
+                userTransaction.rollback();
+                } 
+                catch (Exception ex) {
+                    //do nothing
+                }
             }
         }
     }
     
-    public boolean insertRegisterData(RegisterData data) {
+    public boolean insertRegisterData(Account account, User user) {
         boolean success = false;
-        try {
-            Account account = new Account(data.getUsername(), data.getPassword());
-            User user = new User(data.getFirstName(), 
-                    data.getLastName(), 
-                    data.getTelNumber(), 
-                    data.getEmail());
-            EntityManager entityManager = entityManagerFactory.createEntityManager();
-            userTransaction.begin();
+        
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        try {           
+            userTransaction.begin( );          
             entityManager.joinTransaction();
             entityManager.persist(account);
-            user.setFkAccId(account.getAccId());
+            user.setFkAccId(account);
             entityManager.persist(user);
-
-            userTransaction.commit();
-            
-            success = true;
+            userTransaction.commit( );
+           
+            return true;
         } 
         catch (Exception e) {
-            try {
+            System.out.println("insertRegisterData error: " + e.toString());
+            try {            
                 userTransaction.rollback();
             } 
             catch (Exception ex) {
                 //do nothing
             }
         }
+        finally{
+            entityManager.close();
+        }
       
-        return success;
-    }
+        return false;
+    } 
 }

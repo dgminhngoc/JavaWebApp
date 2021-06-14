@@ -10,5 +10,11 @@
     <class>org.ex.fh.model.ProductCategory</class>
     <class>org.ex.fh.model.Worker</class>
     <class>org.ex.fh.model.BillDetail</class>
+    <class>org.ex.fh.model.User</class>
+    <class>org.ex.fh.model.Account</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <property name="eclipselink.target-database" value="MySQL"/>
+    </properties>
   </persistence-unit>
 </persistence>

@@ -9,9 +9,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -31,6 +35,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Account.findByAccPassword", query = "SELECT a FROM Account a WHERE a.accPassword = :accPassword")})
 public class Account implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ACC_ID")
+    private Integer accId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -41,24 +51,12 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ACC_PASSWORD")
     private String accPassword;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ACC_ID")
-    private Integer accId;
-
+    
     public Account() {
     }
 
     public Account(Integer accId) {
         this.accId = accId;
-    }
-    
-    public Account(String accName, String accPassword) {
-        this.accName = accName;
-        this.accPassword = accPassword;
     }
 
     public Account(Integer accId, String accName, String accPassword) {
@@ -115,4 +113,5 @@ public class Account implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Account[ accId=" + accId + " ]";
     }
+    
 }

@@ -7,11 +7,17 @@ package org.ex.fh.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,6 +40,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByFkAccId", query = "SELECT u FROM User u WHERE u.fkAccId = :fkAccId")})
 public class User implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "USER_ID")
+    private Integer userId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -54,17 +66,9 @@ public class User implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "USER_EMAIL")
     private String userEmail;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_ACC_ID")
-    private int fkAccId;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "USER_ID")
-    private Integer userId;
+    @JoinColumn(name = "FK_ACC_ID", referencedColumnName = "ACC_ID")
+    @OneToOne(optional = false)
+    private Account fkAccId;
 
     public User() {
     }
@@ -72,29 +76,13 @@ public class User implements Serializable {
     public User(Integer userId) {
         this.userId = userId;
     }
-    
-    public User(String userFirstName, String userLastName, String userTelNr, String userEmail, int fkAccId) {
-        this.userFirstName = userFirstName;
-        this.userLastName = userLastName;
-        this.userTelNr = userTelNr;
-        this.userEmail = userEmail;
-        this.fkAccId = fkAccId;
-    }
 
-    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail, int fkAccId) {
+    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail) {
         this.userId = userId;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userTelNr = userTelNr;
-        this.userEmail = userEmail;
-        this.fkAccId = fkAccId;
-    }
-    
-    public User(String userFirstName, String userLastName, String userTelNr, String userEmail) {
-        this.userFirstName = userFirstName;
-        this.userLastName = userLastName;
-        this.userTelNr = userTelNr;
-        this.userEmail = userEmail;
+        this.userEmail = userEmail;  
     }
 
     public Integer getUserId() {
@@ -137,11 +125,11 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public int getFkAccId() {
+    public Account getFkAccId() {
         return fkAccId;
     }
 
-    public void setFkAccId(int fkAccId) {
+    public void setFkAccId(Account fkAccId) {
         this.fkAccId = fkAccId;
     }
 
@@ -169,4 +157,5 @@ public class User implements Serializable {
     public String toString() {
         return "org.ex.fh.model.User[ userId=" + userId + " ]";
     }
+    
 }
