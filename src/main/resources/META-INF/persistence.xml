@@ -14,7 +14,7 @@
     <class>org.ex.fh.model.Account</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
-      <property name="eclipselink.target-database" value="MySQL"/>
+        <property name="eclipselink.target-database" value="MySQL"/>
     </properties>
   </persistence-unit>
 </persistence>

@@ -79,6 +79,7 @@ public class ProductBean implements Serializable {
         for(ProductCategory productCategory : listProductCategory) {
             if(productCategory.getProductCatName().equals(selectedStrCategory)) {
                 selectedCategory = productCategory;
+                System.out.println("selectedCategory: " + selectedCategory.getProductCatName());
                 break;
             }
         }

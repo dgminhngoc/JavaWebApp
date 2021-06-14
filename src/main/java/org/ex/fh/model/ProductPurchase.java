@@ -31,7 +31,5 @@ public class ProductPurchase {
 
     public void setNumberOfItem(int numberOfItem) {
         this.numberOfItem = (numberOfItem < 0) ? 0 : numberOfItem;
-    }
-    
-    
+    }  
 }

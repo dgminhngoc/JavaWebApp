@@ -13,8 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -66,9 +64,12 @@ public class User implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "USER_EMAIL")
     private String userEmail;
-    @JoinColumn(name = "FK_ACC_ID", referencedColumnName = "ACC_ID")
-    @OneToOne(optional = false)
-    private Account fkAccId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "FK_ACC_ID")
+    private int fkAccId;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Account account;
 
     public User() {
     }
@@ -77,12 +78,13 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail) {
+    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail, int fkAccId) {
         this.userId = userId;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userTelNr = userTelNr;
-        this.userEmail = userEmail;  
+        this.userEmail = userEmail;
+        this.fkAccId = fkAccId;
     }
 
     public Integer getUserId() {
@@ -125,12 +127,20 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public Account getFkAccId() {
+    public int getFkAccId() {
         return fkAccId;
     }
 
-    public void setFkAccId(Account fkAccId) {
+    public void setFkAccId(int fkAccId) {
         this.fkAccId = fkAccId;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

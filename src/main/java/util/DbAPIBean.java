@@ -151,7 +151,7 @@ public class DbAPIBean {
             userTransaction.begin( );          
             entityManager.joinTransaction();
             entityManager.persist(account);
-            user.setFkAccId(account);
+            user.setFkAccId(account.getAccId());
             entityManager.persist(user);
             userTransaction.commit( );
            

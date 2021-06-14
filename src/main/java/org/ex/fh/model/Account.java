@@ -37,7 +37,7 @@ public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
     @Column(name = "ACC_ID")
     private Integer accId;
@@ -51,7 +51,10 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ACC_PASSWORD")
     private String accPassword;
-    
+    @JoinColumn(name = "ACC_ID", referencedColumnName = "FK_ACC_ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private User user;
+
     public Account() {
     }
 
@@ -87,6 +90,14 @@ public class Account implements Serializable {
 
     public void setAccPassword(String accPassword) {
         this.accPassword = accPassword;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
