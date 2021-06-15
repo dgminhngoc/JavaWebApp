@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -30,8 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Deal.findAll", query = "SELECT d FROM Deal d"),
     @NamedQuery(name = "Deal.findByDealId", query = "SELECT d FROM Deal d WHERE d.dealId = :dealId"),
     @NamedQuery(name = "Deal.findByDealStatus", query = "SELECT d FROM Deal d WHERE d.dealStatus = :dealStatus"),
-    @NamedQuery(name = "Deal.findByDealValue", query = "SELECT d FROM Deal d WHERE d.dealValue = :dealValue"),
-    @NamedQuery(name = "Deal.findByFkProductId", query = "SELECT d FROM Deal d WHERE d.fkProductId = :fkProductId")})
+    @NamedQuery(name = "Deal.findByDealValue", query = "SELECT d FROM Deal d WHERE d.dealValue = :dealValue")})
 public class Deal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,10 +50,9 @@ public class Deal implements Serializable {
     @NotNull
     @Column(name = "DEAL_VALUE")
     private int dealValue;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_PRODUCT_ID")
-    private int fkProductId;
+    @JoinColumn(name = "FK_PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    @ManyToOne(optional = false)
+    private Product fkProductId;
 
     public Deal() {
     }
@@ -61,11 +61,10 @@ public class Deal implements Serializable {
         this.dealId = dealId;
     }
 
-    public Deal(Integer dealId, String dealStatus, int dealValue, int fkProductId) {
+    public Deal(Integer dealId, String dealStatus, int dealValue) {
         this.dealId = dealId;
         this.dealStatus = dealStatus;
         this.dealValue = dealValue;
-        this.fkProductId = fkProductId;
     }
 
     public Integer getDealId() {
@@ -92,11 +91,11 @@ public class Deal implements Serializable {
         this.dealValue = dealValue;
     }
 
-    public int getFkProductId() {
+    public Product getFkProductId() {
         return fkProductId;
     }
 
-    public void setFkProductId(int fkProductId) {
+    public void setFkProductId(Product fkProductId) {
         this.fkProductId = fkProductId;
     }
 

@@ -6,7 +6,9 @@
 package org.ex.fh.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,10 +16,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,6 +47,8 @@ public class ProductCategory implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "PRODUCT_CAT_NAME")
     private String productCatName;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductCateId")
+    private Collection<Product> productCollection;
 
     public ProductCategory() {
     }
@@ -70,6 +76,15 @@ public class ProductCategory implements Serializable {
 
     public void setProductCatName(String productCatName) {
         this.productCatName = productCatName;
+    }
+
+    @XmlTransient
+    public Collection<Product> getProductCollection() {
+        return productCollection;
+    }
+
+    public void setProductCollection(Collection<Product> productCollection) {
+        this.productCollection = productCollection;
     }
 
     @Override

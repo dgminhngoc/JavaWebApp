@@ -7,19 +7,25 @@ package org.ex.fh.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,8 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p"),
     @NamedQuery(name = "Product.findByProductId", query = "SELECT p FROM Product p WHERE p.productId = :productId"),
     @NamedQuery(name = "Product.findByProductName", query = "SELECT p FROM Product p WHERE p.productName = :productName"),
-    @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice"),
-    @NamedQuery(name = "Product.findByFkProductCateId", query = "SELECT p FROM Product p WHERE p.fkProductCateId = :fkProductCateId")})
+    @NamedQuery(name = "Product.findByProductPrice", query = "SELECT p FROM Product p WHERE p.productPrice = :productPrice")})
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,10 +63,15 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "PRODUCT_PRICE")
     private BigDecimal productPrice;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_PRODUCT_CATE_ID")
-    private int fkProductCateId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductId")
+    private Collection<Deal> dealCollection;
+    @JoinColumn(name = "FK_PRODUCT_CATE_ID", referencedColumnName = "PRODUCT_CAT_ID")
+    @ManyToOne(optional = false)
+    private ProductCategory fkProductCateId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductId")
+    private Collection<BillDetail> billDetailCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductId")
+    private Collection<Comment> commentCollection;
 
     public Product() {
     }
@@ -70,12 +80,11 @@ public class Product implements Serializable {
         this.productId = productId;
     }
 
-    public Product(Integer productId, String productName, String productDescription, BigDecimal productPrice, int fkProductCateId) {
+    public Product(Integer productId, String productName, String productDescription, BigDecimal productPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productDescription = productDescription;
         this.productPrice = productPrice;
-        this.fkProductCateId = fkProductCateId;
     }
 
     public Integer getProductId() {
@@ -110,12 +119,39 @@ public class Product implements Serializable {
         this.productPrice = productPrice;
     }
 
-    public int getFkProductCateId() {
+    @XmlTransient
+    public Collection<Deal> getDealCollection() {
+        return dealCollection;
+    }
+
+    public void setDealCollection(Collection<Deal> dealCollection) {
+        this.dealCollection = dealCollection;
+    }
+
+    public ProductCategory getFkProductCateId() {
         return fkProductCateId;
     }
 
-    public void setFkProductCateId(int fkProductCateId) {
+    public void setFkProductCateId(ProductCategory fkProductCateId) {
         this.fkProductCateId = fkProductCateId;
+    }
+
+    @XmlTransient
+    public Collection<BillDetail> getBillDetailCollection() {
+        return billDetailCollection;
+    }
+
+    public void setBillDetailCollection(Collection<BillDetail> billDetailCollection) {
+        this.billDetailCollection = billDetailCollection;
+    }
+
+    @XmlTransient
+    public Collection<Comment> getCommentCollection() {
+        return commentCollection;
+    }
+
+    public void setCommentCollection(Collection<Comment> commentCollection) {
+        this.commentCollection = commentCollection;
     }
 
     @Override

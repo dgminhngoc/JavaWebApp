@@ -11,8 +11,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,19 +32,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Bill.findAll", query = "SELECT b FROM Bill b"),
     @NamedQuery(name = "Bill.findByBillId", query = "SELECT b FROM Bill b WHERE b.billId = :billId"),
-    @NamedQuery(name = "Bill.findByBillDate", query = "SELECT b FROM Bill b WHERE b.billDate = :billDate"),
-    @NamedQuery(name = "Bill.findByFkUserId", query = "SELECT b FROM Bill b WHERE b.fkUserId = :fkUserId")})
+    @NamedQuery(name = "Bill.findByBillDate", query = "SELECT b FROM Bill b WHERE b.billDate = :billDate")})
 public class Bill implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "BILL_DATE")
-    @Temporal(TemporalType.DATE)
-    private Date billDate;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_USER_ID")
-    private int fkUserId;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,6 +41,17 @@ public class Bill implements Serializable {
     @NotNull
     @Column(name = "BILL_ID")
     private Integer billId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "BILL_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date billDate;
+    @JoinColumn(name = "BILL_ID", referencedColumnName = "FK_BILL_ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private BillDetail billDetail;
+    @JoinColumn(name = "FK_USER_ID", referencedColumnName = "USER_ID")
+    @ManyToOne(optional = false)
+    private User fkUserId;
 
     public Bill() {
     }
@@ -56,16 +59,14 @@ public class Bill implements Serializable {
     public Bill(Integer billId) {
         this.billId = billId;
     }
-    
-    public Bill(Date billDate, int fkUserId) {
-        this.billDate = billDate;
-        this.fkUserId = fkUserId;
-    }
 
-    public Bill(Integer billId, Date billDate, int fkUserId) {
+    public Bill(Integer billId, Date billDate) {
         this.billId = billId;
         this.billDate = billDate;
-        this.fkUserId = fkUserId;
+    }
+    
+    public Bill(Date billDate) {
+        this.billDate = billDate;
     }
 
     public Integer getBillId() {
@@ -84,11 +85,19 @@ public class Bill implements Serializable {
         this.billDate = billDate;
     }
 
-    public int getFkUserId() {
+    public BillDetail getBillDetail() {
+        return billDetail;
+    }
+
+    public void setBillDetail(BillDetail billDetail) {
+        this.billDetail = billDetail;
+    }
+
+    public User getFkUserId() {
         return fkUserId;
     }
 
-    public void setFkUserId(int fkUserId) {
+    public void setFkUserId(User fkUserId) {
         this.fkUserId = fkUserId;
     }
 
@@ -116,4 +125,5 @@ public class Bill implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Bill[ billId=" + billId + " ]";
     }
+    
 }

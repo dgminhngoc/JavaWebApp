@@ -118,7 +118,8 @@ public class DbAPIBean {
     public void insertPurchase(List<ProductPurchase> listProductPurchase) {
         if (listProductPurchase != null && listProductPurchase.size() > 0) {
             Date date = new Date();
-            Bill bill = new Bill(date, AppInfo.getInstance().getUser().getUserId());
+            Bill bill = new Bill(date);
+            bill.setFkUserId(AppInfo.getInstance().getUser());
             try {
                 EntityManager entityManager = entityManagerFactory.createEntityManager();
                 userTransaction.begin();
@@ -143,15 +144,13 @@ public class DbAPIBean {
         }
     }
     
-    public boolean insertRegisterData(Account account, User user) {
-        boolean success = false;
-        
+    public boolean insertRegisterData(Account account, User user) {        
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         try {           
             userTransaction.begin( );          
             entityManager.joinTransaction();
             entityManager.persist(account);
-            user.setFkAccId(account.getAccId());
+            user.setFkAccId(account);
             entityManager.persist(user);
             userTransaction.commit( );
            

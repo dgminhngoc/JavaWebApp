@@ -6,6 +6,7 @@
 package org.ex.fh.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,13 +14,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,8 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "User.findByUserFirstName", query = "SELECT u FROM User u WHERE u.userFirstName = :userFirstName"),
     @NamedQuery(name = "User.findByUserLastName", query = "SELECT u FROM User u WHERE u.userLastName = :userLastName"),
     @NamedQuery(name = "User.findByUserTelNr", query = "SELECT u FROM User u WHERE u.userTelNr = :userTelNr"),
-    @NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail"),
-    @NamedQuery(name = "User.findByFkAccId", query = "SELECT u FROM User u WHERE u.fkAccId = :fkAccId")})
+    @NamedQuery(name = "User.findByUserEmail", query = "SELECT u FROM User u WHERE u.userEmail = :userEmail")})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -64,10 +68,11 @@ public class User implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "USER_EMAIL")
     private String userEmail;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_ACC_ID")
-    private int fkAccId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUserId")
+    private Collection<Bill> billCollection;
+    @JoinColumn(name = "FK_ACC_ID", referencedColumnName = "ACC_ID")
+    @ManyToOne(optional = false)
+    private Account fkAccId;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Account account;
 
@@ -78,13 +83,12 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail, int fkAccId) {
+    public User(Integer userId, String userFirstName, String userLastName, String userTelNr, String userEmail) {
         this.userId = userId;
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.userTelNr = userTelNr;
         this.userEmail = userEmail;
-        this.fkAccId = fkAccId;
     }
 
     public Integer getUserId() {
@@ -127,11 +131,20 @@ public class User implements Serializable {
         this.userEmail = userEmail;
     }
 
-    public int getFkAccId() {
+    @XmlTransient
+    public Collection<Bill> getBillCollection() {
+        return billCollection;
+    }
+
+    public void setBillCollection(Collection<Bill> billCollection) {
+        this.billCollection = billCollection;
+    }
+
+    public Account getFkAccId() {
         return fkAccId;
     }
 
-    public void setFkAccId(int fkAccId) {
+    public void setFkAccId(Account fkAccId) {
         this.fkAccId = fkAccId;
     }
 

@@ -13,7 +13,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -33,8 +35,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
     @NamedQuery(name = "Comment.findByCommentId", query = "SELECT c FROM Comment c WHERE c.commentId = :commentId"),
-    @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate"),
-    @NamedQuery(name = "Comment.findByFkProductId", query = "SELECT c FROM Comment c WHERE c.fkProductId = :fkProductId")})
+    @NamedQuery(name = "Comment.findByCommentDate", query = "SELECT c FROM Comment c WHERE c.commentDate = :commentDate")})
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,10 +55,9 @@ public class Comment implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "COMMENT_CONTENT")
     private String commentContent;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "FK_PRODUCT_ID")
-    private int fkProductId;
+    @JoinColumn(name = "FK_PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    @ManyToOne(optional = false)
+    private Product fkProductId;
 
     public Comment() {
     }
@@ -66,11 +66,10 @@ public class Comment implements Serializable {
         this.commentId = commentId;
     }
 
-    public Comment(Integer commentId, Date commentDate, String commentContent, int fkProductId) {
+    public Comment(Integer commentId, Date commentDate, String commentContent) {
         this.commentId = commentId;
         this.commentDate = commentDate;
         this.commentContent = commentContent;
-        this.fkProductId = fkProductId;
     }
 
     public Integer getCommentId() {
@@ -97,11 +96,11 @@ public class Comment implements Serializable {
         this.commentContent = commentContent;
     }
 
-    public int getFkProductId() {
+    public Product getFkProductId() {
         return fkProductId;
     }
 
-    public void setFkProductId(int fkProductId) {
+    public void setFkProductId(Product fkProductId) {
         this.fkProductId = fkProductId;
     }
 
