@@ -41,7 +41,7 @@ public class DbAPIBean {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         TypedQuery<Product> query = entityManager
                 .createNamedQuery("Product.findByFkProductCateId", Product.class);
-        query.setParameter("fkProductCateId", productCategory.getProductCatId());
+        query.setParameter("fkProductCateId", productCategory);
         List<Product> listProduct = query.getResultList();
         return listProduct;
     }
