@@ -29,11 +29,13 @@
                         <f:selectItems value="#{productBean.listStrCategory}"/>  
                     </p:selectOneMenu>
                    
-                    <p:commandButton value="Load Data" action="#{productBean.reloadData()}">
-                        <p:ajax update="products"/>
-                    </p:commandButton>
+                    <p:commandButton value="Load Data" 
+                                     action="#{productBean.reloadData()}"
+                                     update="products"/>   
                     
-                    <p:commandButton value="Add to cart" action="#{productBean.addToCart()}">
+                    <p:commandButton value="Add to cart" 
+                                     action="#{productBean.addToCart()}" 
+                                     update="products">
                         
                     </p:commandButton>
                     <br/>
