@@ -60,7 +60,6 @@ public class LoginBean implements Serializable {
         this.message = message;
     }
     
-    
     public String doLogin(){
         boolean isAccountValid = false;
         Account account = dbAPIBean.findAccount(username);

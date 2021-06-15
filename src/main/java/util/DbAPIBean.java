@@ -81,7 +81,7 @@ public class DbAPIBean {
         
             TypedQuery<User> query =
                     entityManager.createNamedQuery("User.findByFkAccId", User.class);
-            query.setParameter("fkAccId", account.getAccId());
+            query.setParameter("fkAccId", account);
             
             user = query.getSingleResult();
             
