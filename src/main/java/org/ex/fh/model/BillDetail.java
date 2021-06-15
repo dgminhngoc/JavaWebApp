@@ -8,7 +8,6 @@ package org.ex.fh.model;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "BillDetail.findAll", query = "SELECT b FROM BillDetail b"),
     @NamedQuery(name = "BillDetail.findByBillDetailId", query = "SELECT b FROM BillDetail b WHERE b.billDetailId = :billDetailId"),
     @NamedQuery(name = "BillDetail.findByBillProductAmount", query = "SELECT b FROM BillDetail b WHERE b.billProductAmount = :billProductAmount"),
-    @NamedQuery(name = "BillDetail.findByFkBillId", query = "SELECT b FROM BillDetail b WHERE b.fkBillId = :fkBillId"),
     @NamedQuery(name = "BillDetail.findByBildDetailDate", query = "SELECT b FROM BillDetail b WHERE b.bildDetailDate = :bildDetailDate")})
 public class BillDetail implements Serializable {
 
@@ -52,15 +49,12 @@ public class BillDetail implements Serializable {
     private int billProductAmount;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FK_BILL_ID")
-    private int fkBillId;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "BILD_DETAIL_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date bildDetailDate;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "billDetail")
-    private Bill bill;
+    @JoinColumn(name = "FK_BILL_ID", referencedColumnName = "BILL_ID")
+    @ManyToOne(optional = false)
+    private Bill fkBillId;
     @JoinColumn(name = "FK_PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     @ManyToOne(optional = false)
     private Product fkProductId;
@@ -72,10 +66,9 @@ public class BillDetail implements Serializable {
         this.billDetailId = billDetailId;
     }
 
-    public BillDetail(Integer billDetailId, int billProductAmount, int fkBillId, Date bildDetailDate) {
+    public BillDetail(Integer billDetailId, int billProductAmount, Date bildDetailDate) {
         this.billDetailId = billDetailId;
         this.billProductAmount = billProductAmount;
-        this.fkBillId = fkBillId;
         this.bildDetailDate = bildDetailDate;
     }
 
@@ -95,14 +88,6 @@ public class BillDetail implements Serializable {
         this.billProductAmount = billProductAmount;
     }
 
-    public int getFkBillId() {
-        return fkBillId;
-    }
-
-    public void setFkBillId(int fkBillId) {
-        this.fkBillId = fkBillId;
-    }
-
     public Date getBildDetailDate() {
         return bildDetailDate;
     }
@@ -111,12 +96,12 @@ public class BillDetail implements Serializable {
         this.bildDetailDate = bildDetailDate;
     }
 
-    public Bill getBill() {
-        return bill;
+    public Bill getFkBillId() {
+        return fkBillId;
     }
 
-    public void setBill(Bill bill) {
-        this.bill = bill;
+    public void setFkBillId(Bill fkBillId) {
+        this.fkBillId = fkBillId;
     }
 
     public Product getFkProductId() {

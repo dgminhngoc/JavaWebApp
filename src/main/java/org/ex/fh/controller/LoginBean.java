@@ -81,7 +81,7 @@ public class LoginBean implements Serializable {
             FacesMessage fmsg = new FacesMessage(message);
             FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
 
-            return "/hallo.xhtml";
+            return "/home.xhtml";
         }
         else {
             JSPUtil.addErrorMessageForComponent("LOG", "Überprüfen Sie Ihre Login-Daten!");

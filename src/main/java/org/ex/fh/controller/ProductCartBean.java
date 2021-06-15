@@ -9,8 +9,10 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.ex.fh.model.ProductPurchase;
 import util.AppInfo;
 import util.ProductCart;
@@ -63,7 +65,11 @@ public class ProductCartBean implements Serializable {
         if(AppInfo.getInstance().getUser() != null) {
             ProductCart.getInstance().purchase();
             
-            return "/hallo.xhtml";
+            String message = "Purchase successful";
+            FacesMessage fmsg = new FacesMessage(message);
+            FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
+            
+            return "/home.xhtml";
         }
         //guest
         else {

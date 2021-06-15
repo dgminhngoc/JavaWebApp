@@ -44,12 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "USER_ID")
-    private Integer userId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -70,6 +64,13 @@ public class User implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "USER_EMAIL")
     private String userEmail;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "USER_ID")
+    private Integer userId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkUserId")
     private Collection<Bill> billCollection;
     @JoinColumn(name = "FK_ACC_ID", referencedColumnName = "ACC_ID")
@@ -182,5 +183,5 @@ public class User implements Serializable {
     public String toString() {
         return "org.ex.fh.model.User[ userId=" + userId + " ]";
     }
-    
+   
 }

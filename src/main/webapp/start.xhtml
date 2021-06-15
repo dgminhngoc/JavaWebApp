@@ -11,18 +11,18 @@
                     <u1>
                         <li>
                             <h:commandLink 
-                                value="Anmelden" 
-                                action="/login.xhtml"/>
+                                value="Login" 
+                                action="#{navigateBean.navigateToLoginScreen()}"/>
                         </li>
                         <li>
                             <h:commandLink 
-                                value="Registieren" 
-                                action="/register.xhtml"/>
+                                value="Register" 
+                                action="#{navigateBean.navigateToRegisterScreen()}"/>
                         </li>      
                         <li>
                             <h:commandLink 
                                 value="Produkt" 
-                                action="/product.xhtml"/>
+                                action="#{navigateBean.navigateToProductScreen()}"/>
                         </li>    
                     </u1>
                 </h:form>

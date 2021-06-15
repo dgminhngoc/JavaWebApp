@@ -36,17 +36,18 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ProductCategory.findByProductCatName", query = "SELECT p FROM ProductCategory p WHERE p.productCatName = :productCatName")})
 public class ProductCategory implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
+    @Column(name = "PRODUCT_CAT_NAME")
+    private String productCatName;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "PRODUCT_CAT_ID")
     private Integer productCatId;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "PRODUCT_CAT_NAME")
-    private String productCatName;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductCateId")
     private Collection<Product> productCollection;
 
@@ -111,5 +112,4 @@ public class ProductCategory implements Serializable {
     public String toString() {
         return "org.ex.fh.model.ProductCategory[ productCatId=" + productCatId + " ]";
     }
-    
 }

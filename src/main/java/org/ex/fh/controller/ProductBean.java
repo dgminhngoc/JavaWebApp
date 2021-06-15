@@ -87,7 +87,7 @@ public class ProductBean implements Serializable {
     
     public void addToCart() {
         ProductCart.getInstance().addToCart(listProductPurchase);
-        listProductCategory.clear();
+        listProductPurchase.clear();
     }
 
     public List<ProductCategory> getListProductCategory() { 

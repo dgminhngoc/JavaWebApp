@@ -39,12 +39,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Account.findByAccPassword", query = "SELECT a FROM Account a WHERE a.accPassword = :accPassword")})
 public class Account implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "ACC_ID")
-    private Integer accId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
@@ -55,6 +49,13 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ACC_PASSWORD")
     private String accPassword;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "ACC_ID")
+    private Integer accId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkAccId")
     private Collection<User> userCollection;
     @JoinColumn(name = "ACC_ID", referencedColumnName = "FK_ACC_ID", insertable = false, updatable = false)
@@ -139,5 +140,4 @@ public class Account implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Account[ accId=" + accId + " ]";
     }
-    
 }

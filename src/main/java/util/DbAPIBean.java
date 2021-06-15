@@ -117,19 +117,21 @@ public class DbAPIBean {
     
     public void insertPurchase(List<ProductPurchase> listProductPurchase) {
         if (listProductPurchase != null && listProductPurchase.size() > 0) {
-            Date date = new Date();
-            Bill bill = new Bill(date);
+            Bill bill = new Bill();
+            bill.setBillDate(new Date());    
             bill.setFkUserId(AppInfo.getInstance().getUser());
             try {
                 EntityManager entityManager = entityManagerFactory.createEntityManager();
                 userTransaction.begin();
                 entityManager.joinTransaction();
                 entityManager.persist(bill);
-                for(ProductPurchase productPurchase : listProductPurchase) {       
-                    entityManager.persist(new BillDetail(productPurchase.getNumberOfItem(), 
-                        bill.getBillId(), 
-                        productPurchase.getProduct().getProductId(), 
-                        date));
+                for(ProductPurchase productPurchase : listProductPurchase) {  
+                    BillDetail billDetail = new BillDetail();
+                    billDetail.setBildDetailDate(bill.getBillDate());
+                    billDetail.setBillProductAmount(productPurchase.getNumberOfItem());
+                    billDetail.setFkBillId(bill);
+                    billDetail.setFkProductId(productPurchase.getProduct());
+                    entityManager.persist(billDetail);
                 }
                 userTransaction.commit();      
             } 

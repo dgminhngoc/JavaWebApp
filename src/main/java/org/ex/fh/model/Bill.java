@@ -6,8 +6,10 @@
 package org.ex.fh.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -15,12 +17,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -46,12 +49,11 @@ public class Bill implements Serializable {
     @Column(name = "BILL_DATE")
     @Temporal(TemporalType.DATE)
     private Date billDate;
-    @JoinColumn(name = "BILL_ID", referencedColumnName = "FK_BILL_ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private BillDetail billDetail;
     @JoinColumn(name = "FK_USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false)
     private User fkUserId;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkBillId")
+    private Collection<BillDetail> billDetailCollection;
 
     public Bill() {
     }
@@ -62,10 +64,6 @@ public class Bill implements Serializable {
 
     public Bill(Integer billId, Date billDate) {
         this.billId = billId;
-        this.billDate = billDate;
-    }
-    
-    public Bill(Date billDate) {
         this.billDate = billDate;
     }
 
@@ -85,20 +83,21 @@ public class Bill implements Serializable {
         this.billDate = billDate;
     }
 
-    public BillDetail getBillDetail() {
-        return billDetail;
-    }
-
-    public void setBillDetail(BillDetail billDetail) {
-        this.billDetail = billDetail;
-    }
-
     public User getFkUserId() {
         return fkUserId;
     }
 
     public void setFkUserId(User fkUserId) {
         this.fkUserId = fkUserId;
+    }
+
+    @XmlTransient
+    public Collection<BillDetail> getBillDetailCollection() {
+        return billDetailCollection;
+    }
+
+    public void setBillDetailCollection(Collection<BillDetail> billDetailCollection) {
+        this.billDetailCollection = billDetailCollection;
     }
 
     @Override

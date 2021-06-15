@@ -43,12 +43,6 @@ import javax.xml.bind.annotation.XmlTransient;
 })
 public class Product implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "PRODUCT_ID")
-    private Integer productId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 40)
@@ -65,6 +59,13 @@ public class Product implements Serializable {
     @NotNull
     @Column(name = "PRODUCT_PRICE")
     private BigDecimal productPrice;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "PRODUCT_ID")
+    private Integer productId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkProductId")
     private Collection<Deal> dealCollection;
     @JoinColumn(name = "FK_PRODUCT_CATE_ID", referencedColumnName = "PRODUCT_CAT_ID")
@@ -179,6 +180,5 @@ public class Product implements Serializable {
     @Override
     public String toString() {
         return "org.ex.fh.model.Product[ productId=" + productId + " ]";
-    }
-    
+    }   
 }

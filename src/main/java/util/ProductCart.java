@@ -16,18 +16,19 @@ import org.ex.fh.model.ProductPurchase;
  */
 public class ProductCart {
     
-    @Inject
     private DbAPIBean dbAPIBean;
     
     private static ProductCart instance;
     
     private List<ProductPurchase> listProductPurchase = new ArrayList<>();
     
-    private ProductCart(){}
+    private ProductCart(){
+        dbAPIBean = new DbAPIBean();
+    }
     
     public static ProductCart getInstance() {
         if(instance == null) {
-            instance = new ProductCart();
+            instance = new ProductCart();          
         }
         
         return instance;
