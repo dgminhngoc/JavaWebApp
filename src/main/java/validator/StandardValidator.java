@@ -25,12 +25,13 @@ public class StandardValidator implements Validator {
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         System.out.println("validateStandard");
         String name = value.toString();
+        String componentId = component.getId();
         FacesMessage msg;
         String pattern = "^[a-zA-Z0-9._-]{3,}$"; // Nur Buchstaben und -
                 
         if(!Pattern.matches(pattern, name)){
             System.out.println("StandardValidator NOT valid");
-            msg = new FacesMessage("Bitte geben Sie einen gültigen String ein"); 
+            msg = new FacesMessage("Bitte geben Sie für "+componentId+" einen gültigen String ein"); 
             context.addMessage(component.getClientId(context), msg);
             throw new ValidatorException(msg);
         }

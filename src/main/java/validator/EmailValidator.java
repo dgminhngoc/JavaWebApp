@@ -30,7 +30,7 @@ public class EmailValidator implements Validator {
                 
         if(!Pattern.matches(pattern, email)){
             System.out.println("EmailValidator NOT valid");
-            msg = new FacesMessage("Bitte geben Sie einen gültigen Namen ein"); 
+            msg = new FacesMessage("Bitte geben Sie einen gültigen Email ein"); 
             context.addMessage(component.getClientId(context), msg);
             throw new ValidatorException(msg);
         }
