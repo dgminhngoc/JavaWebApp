@@ -21,15 +21,15 @@ import util.ProductCart;
  *
  * @author dgmin
  */
-@ManagedBean(name="productCartBean")
+@ManagedBean(name="productCartPurchaseBean")
 @SessionScoped
-public class ProductCartBean implements Serializable {
+public class ProductCartPurchaseBean implements Serializable {
     
     private int numberOfItem = 0;
     private BigDecimal totalPrice = BigDecimal.valueOf(0.0);
     private List<ProductPurchase> listProductPurchase;
     
-    public ProductCartBean() {
+    public ProductCartPurchaseBean() {
         // do nothing
     }
     
@@ -60,14 +60,13 @@ public class ProductCartBean implements Serializable {
         return totalPrice;
     }
     
-    public String confirm() {
-        //user is already logged in
-        if(AppInfo.getInstance().getUser() != null) {  
-            return "/cart_purchase.xhtml";
-        }
-        //guest
-        else {
-            return "/login.xhtml";
-        }
+    public String purchase() {
+        ProductCart.getInstance().purchase();
+
+        String message = "Purchase successful";
+        FacesMessage fmsg = new FacesMessage(message);
+        FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
+
+        return "/home.xhtml"; 
     }
 }
