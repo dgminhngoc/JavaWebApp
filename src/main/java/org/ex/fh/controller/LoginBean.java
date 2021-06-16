@@ -85,7 +85,7 @@ public class LoginBean implements Serializable {
         }
         else {
             JSPUtil.addErrorMessageForComponent("LOG", "Überprüfen Sie Ihre Login-Daten!");
-            return "/start.xhtml";
+            return "/login.xhtml";
         }
     }
     

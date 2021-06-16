@@ -26,12 +26,16 @@ public class NameValidator implements Validator {
         System.out.println("validateName");
         String name = value.toString();
         FacesMessage msg;
-        String pattern = "^[a-zA-Z0-9._-]{3,}$"; // Nur Buchstaben und -
+        String pattern = "^[a-zA-Z]{3,}$"; // Nur Buchstaben
                 
-        if(!Pattern.matches(pattern, name)){  
+        if(!Pattern.matches(pattern, name)){
+            System.out.println("NameValidator NOT valid");
             msg = new FacesMessage("Bitte geben Sie einen gültigen Namen ein"); 
             context.addMessage(component.getClientId(context), msg);
             throw new ValidatorException(msg);
-        }    
+        }
+        else {
+            System.out.println("NameValidator valid");
+        }
     }
 }

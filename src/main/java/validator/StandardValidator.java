@@ -18,26 +18,24 @@ import javax.faces.validator.ValidatorException;
  * @author dgmin
  */
 
-@FacesValidator("TelNumberValidator")
-public class TelNumberValidator implements Validator {
+@FacesValidator("StandardValidator")
+public class StandardValidator implements Validator {
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        System.out.println("validateTelNumber");
-        String telefonnr = value.toString();
+        System.out.println("validateStandard");
+        String name = value.toString();
         FacesMessage msg;
-        String pattern;
-
-        pattern =  "^\\++\\d{7,15}$";   // Die Nummer muss mit einem + starten und zwischen 7-15
-                                        // Ziffern enthalten.
-        if(!Pattern.matches(pattern, telefonnr)){
-            System.out.println("TelNumberValidator NOT valid");
-            msg = new FacesMessage("Bitte geben Sie Ihre Nummer im Format +49... ein"); 
+        String pattern = "^[a-zA-Z0-9._-]{3,}$"; // Nur Buchstaben und -
+                
+        if(!Pattern.matches(pattern, name)){
+            System.out.println("StandardValidator NOT valid");
+            msg = new FacesMessage("Bitte geben Sie einen gültigen String ein"); 
             context.addMessage(component.getClientId(context), msg);
             throw new ValidatorException(msg);
         }
         else {
-            System.out.println("TelNumberValidator valid");
+            System.out.println("StandardValidator valid");
         }
     }
 }

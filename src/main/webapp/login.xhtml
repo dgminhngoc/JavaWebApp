@@ -34,9 +34,13 @@
                            <h:outputText value = "Login"/>
                         </f:facet>
                         <h:outputLabel value = "Username" />
-                        <h:inputText id="username" value="#{loginBean.username}"/>
+                        <h:inputText id="username" value="#{loginBean.username}">
+                             <f:validator validatorId="StandardValidator"/>
+                        </h:inputText>
                         <h:outputLabel value = "Password" />
-                        <h:inputSecret id="password" value="#{loginBean.password}"/>
+                        <h:inputSecret id="password" value="#{loginBean.password}">
+                             <f:validator validatorId="StandardValidator"/>
+                        </h:inputSecret>
                         <f:facet name = "footer">
                            <h:panelGroup style = "display:block; text-align:center">
                               <h:commandButton 

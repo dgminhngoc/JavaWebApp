@@ -30,7 +30,7 @@ h1 {
     left: 5px;
     width: 195px;
     height: 135px;
-    background-image: url('image/img_menu.jpg');
+    background-image: url('image/img_top_left.jpg');
 }
 
 #menu {
@@ -52,7 +52,7 @@ h1 {
     height: 135px;
     background-color: #909090;
     background-size: cover;
-    background-image: url('image/img_menu.jpg');
+    background-image: url('image/img_top_banner.jpg');
 }
 
 #content {

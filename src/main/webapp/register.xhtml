@@ -35,30 +35,30 @@
                         </f:facet>
                         <h:outputLabel value = "Benutzername" />
                         <h:inputText id="username" value="#{registerBean.account.accName}">
-                                          
+                            <f:validator validatorId="StandardValidator"/>      
                         </h:inputText>
                         <h:outputLabel value = "Passwort" />
                         <h:inputSecret id="password" value="#{registerBean.account.accPassword}">
-                            
+                            <f:validator validatorId="StandardValidator"/>
                         </h:inputSecret>
                         <h:outputLabel value = "Vorname" />
                         <h:inputText    id="firstname" 
                                         value="#{registerBean.user.userFirstName}">
-                            
+                            <f:validator validatorId="NameValidator"/>
                         </h:inputText>
                         <h:outputLabel value = "Nachname" />
                         <h:inputText    id="lastname" 
                                         value="#{registerBean.user.userLastName}"> 
-                          
+                          <f:validator validatorId="NameValidator"/>
                         </h:inputText>
                         <h:outputLabel value = "Tel.nummer" />
                         <h:inputText    id="telnumber" 
                                         value="#{registerBean.user.userTelNr}">    
-                           
+                           <f:validator validatorId="TelNumberValidator"/>
                         </h:inputText>
                         <h:outputLabel value = "Email" />
                         <h:inputText id="email" value="#{registerBean.user.userEmail}">
-                            
+                             <f:validator validatorId="EmailValidator"/>
                         </h:inputText>
                         <f:facet name = "footer">
                            <h:panelGroup style = "display:block; text-align:center">
