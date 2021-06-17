@@ -6,24 +6,22 @@
 package org.ex.fh.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,8 +38,8 @@ public class Bill implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "BILL_ID")
     private Integer billId;
     @Basic(optional = false)
@@ -52,8 +50,6 @@ public class Bill implements Serializable {
     @JoinColumn(name = "FK_USER_ID", referencedColumnName = "USER_ID")
     @ManyToOne(optional = false)
     private User fkUserId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "fkBillId")
-    private Collection<BillDetail> billDetailCollection;
 
     public Bill() {
     }
@@ -89,15 +85,6 @@ public class Bill implements Serializable {
 
     public void setFkUserId(User fkUserId) {
         this.fkUserId = fkUserId;
-    }
-
-    @XmlTransient
-    public Collection<BillDetail> getBillDetailCollection() {
-        return billDetailCollection;
-    }
-
-    public void setBillDetailCollection(Collection<BillDetail> billDetailCollection) {
-        this.billDetailCollection = billDetailCollection;
     }
 
     @Override

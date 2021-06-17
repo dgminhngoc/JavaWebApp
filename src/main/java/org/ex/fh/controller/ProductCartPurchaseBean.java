@@ -13,8 +13,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import org.ex.fh.model.ProductPurchase;
 import util.AppInfo;
+import util.DbAPIBean;
 import util.ProductCart;
 
 /**
@@ -24,6 +26,9 @@ import util.ProductCart;
 @ManagedBean(name="productCartPurchaseBean")
 @SessionScoped
 public class ProductCartPurchaseBean implements Serializable {
+    
+    @Inject
+    private DbAPIBean dbAPIBean;
     
     private int numberOfItem = 0;
     private BigDecimal totalPrice = BigDecimal.valueOf(0.0);
@@ -61,9 +66,16 @@ public class ProductCartPurchaseBean implements Serializable {
     }
     
     public String purchase() {
-        ProductCart.getInstance().purchase();
-
-        String message = "Purchase successful";
+        boolean success = dbAPIBean.insertPurchase(listProductPurchase);
+        
+        String message;
+        if(success) {
+            message = "Purchase successful";
+            listProductPurchase.clear();
+        }
+        else {
+            message = "Purchase failed, please try again";
+        }
         FacesMessage fmsg = new FacesMessage(message);
         FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
 

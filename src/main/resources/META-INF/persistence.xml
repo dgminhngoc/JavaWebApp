@@ -13,7 +13,6 @@
     <class>org.ex.fh.model.User</class>
     <class>org.ex.fh.model.Account</class>
     <class>org.ex.fh.model.Bill</class>
-    
     <properties>
       <property name="eclipselink.target-database" value="MySQL"/>
     </properties>

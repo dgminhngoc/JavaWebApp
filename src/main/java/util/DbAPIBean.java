@@ -115,13 +115,16 @@ public class DbAPIBean {
         return bill;
     }
     
-    public void insertPurchase(List<ProductPurchase> listProductPurchase) {
+    public boolean insertPurchase(List<ProductPurchase> listProductPurchase) {
         if (listProductPurchase != null && listProductPurchase.size() > 0) {
+            Date date = new Date();
+            User user = AppInfo.getInstance().getUser();
             Bill bill = new Bill();
-            bill.setBillDate(new Date());    
-            bill.setFkUserId(AppInfo.getInstance().getUser());
-            try {
-                EntityManager entityManager = entityManagerFactory.createEntityManager();
+            bill.setBillDate(date);    
+            bill.setFkUserId(user);
+            EntityManager entityManager;
+            entityManager = entityManagerFactory.createEntityManager();
+            try {               
                 userTransaction.begin();
                 entityManager.joinTransaction();
                 entityManager.persist(bill);
@@ -133,9 +136,11 @@ public class DbAPIBean {
                     billDetail.setFkProductId(productPurchase.getProduct());
                     entityManager.persist(billDetail);
                 }
-                userTransaction.commit();      
+                userTransaction.commit();     
+                return true;
             } 
             catch (Exception e) {
+                System.out.println("insertPurchase error: " + e.toString());
                 try {            
                 userTransaction.rollback();
                 } 
@@ -144,6 +149,8 @@ public class DbAPIBean {
                 }
             }
         }
+        
+        return false;
     }
     
     public boolean insertRegisterData(Account account, User user) {        

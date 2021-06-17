@@ -67,11 +67,6 @@ public class ProductCart {
     public void clearCart() {
         listProductPurchase.clear();
     }
-    
-    public void purchase() {
-        dbAPIBean.insertPurchase(listProductPurchase);
-        listProductPurchase.clear();
-    }
 
     public List<ProductPurchase> getListProductPurchase() {
         return listProductPurchase;

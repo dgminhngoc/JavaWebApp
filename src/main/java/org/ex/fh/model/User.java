@@ -183,5 +183,4 @@ public class User implements Serializable {
     public String toString() {
         return "org.ex.fh.model.User[ userId=" + userId + " ]";
     }
-   
 }
