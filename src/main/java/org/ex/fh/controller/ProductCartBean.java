@@ -8,11 +8,8 @@ package org.ex.fh.controller;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 import org.ex.fh.model.ProductPurchase;
 import util.AppInfo;
 import util.ProductCart;
@@ -32,31 +29,19 @@ public class ProductCartBean implements Serializable {
     public ProductCartBean() {
         // do nothing
     }
-    
-    @PostConstruct
-    private void init() {
-        listProductPurchase = ProductCart.getInstance().getListProductPurchase();
-        
-        for(ProductPurchase productPurchase : listProductPurchase) {
-            System.out.println("product: "+productPurchase.getProduct().getProductName());
-            System.out.println("price: "+productPurchase.getProduct().getProductPrice());
-            System.out.println("number: "+productPurchase.getNumberOfItem());
-            numberOfItem += productPurchase.getNumberOfItem();
-            totalPrice = totalPrice.add(productPurchase.getProduct().getProductPrice()
-                    .multiply(BigDecimal.valueOf(productPurchase.getNumberOfItem())));
-        }
-        
-    }
 
     public List<ProductPurchase> getListProductPurchase() {
+        listProductPurchase = ProductCart.getInstance().getListProductPurchase();
         return listProductPurchase;
     }
 
     public int getNumberOfItem() {
+        numberOfItem = ProductCart.getInstance().getNumberOfItem();
         return numberOfItem;
     }
 
     public BigDecimal getTotalPrice() {
+        totalPrice = ProductCart.getInstance().getTotalPrice();
         return totalPrice;
     }
     
@@ -67,7 +52,7 @@ public class ProductCartBean implements Serializable {
         }
         //guest
         else {
-            return "/login.xhtml";
+            return "/login.xhtml?faces-redirect=true";
         }
     }
 }

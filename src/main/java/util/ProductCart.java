@@ -5,9 +5,9 @@
  */
 package util;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.inject.Inject;
 import org.ex.fh.model.ProductPurchase;
 
 /**
@@ -15,15 +15,13 @@ import org.ex.fh.model.ProductPurchase;
  * @author dgmin
  */
 public class ProductCart {
-    
-    private DbAPIBean dbAPIBean;
-    
+        
     private static ProductCart instance;
     
     private List<ProductPurchase> listProductPurchase = new ArrayList<>();
     
     private ProductCart(){
-        dbAPIBean = new DbAPIBean();
+        
     }
     
     public static ProductCart getInstance() {
@@ -33,6 +31,23 @@ public class ProductCart {
         
         return instance;
     }
+    
+     public int getNumberOfItem() {
+        int numberOfItem = 0;
+        for(ProductPurchase productPurchase : listProductPurchase) {
+           numberOfItem += productPurchase.getNumberOfItem();
+        }
+        return numberOfItem;
+    }
+
+    public BigDecimal getTotalPrice() {
+        BigDecimal totalPrice = BigDecimal.valueOf(0.0);
+        for(ProductPurchase productPurchase : listProductPurchase) {
+           totalPrice = totalPrice.add(productPurchase.getProduct().getProductPrice()
+                   .multiply(BigDecimal.valueOf(productPurchase.getNumberOfItem())));
+        }
+        return totalPrice;
+    } 
     
     public void addToCart(List<ProductPurchase> newListProductPurchase) {
         if(newListProductPurchase != null) {
@@ -70,6 +85,5 @@ public class ProductCart {
 
     public List<ProductPurchase> getListProductPurchase() {
         return listProductPurchase;
-    }
-   
+    } 
 }

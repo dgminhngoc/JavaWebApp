@@ -61,6 +61,8 @@ public class LoginBean implements Serializable {
     }
     
     public String doLogin(){
+        System.out.println("LoginBean");
+        
         boolean isAccountValid = false;
         Account account = dbAPIBean.findAccount(username);
         if (account != null && account.getAccId() != null) {
