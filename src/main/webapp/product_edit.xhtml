@@ -52,10 +52,13 @@
                        
                      </p:dataTable>
                     
-                    <p:dialog header="Product Edit Dialog" widgetVar="dlg" modal="true">
-
+                    <p:dialog header="Product Edit Dialog" widgetVar="dlg" modal="true"
+                              style="max-height:400px;overflow:auto"
+                              >
+                        
+                          
                         <p:panelGrid columns="4" layout="flex">
-                            <p:outputLabel for="iName" value="Name"/>
+                            <p:outputLabel for="iName" value="Product Name"/>
                             <p:inputText id="iName" 
                                          value="#{productEditBean.selectedProduct.productName}"/>
 
@@ -78,6 +81,7 @@
                             <p:outputLabel value="Price"/>
                             <p:calendar value="#{productEditBean.date}"></p:calendar>
                         </p:panelGrid>
+                           
                         <p:commandButton value="Submit" 
                                          onclick="PF('dlg').hide();"/>
                     </p:dialog>
@@ -85,7 +89,8 @@
                                          type="button"
                                          id="btnEdit"
                                          rendered="#{productEditBean.shouldShowBtnEdit}"
-                                         onclick="PF('dlg').show();"/>
+                                         onclick="PF('dlg').show();"
+                                         action="#{productEditBean.doSubmitChange()}/>
                 </h:form>
             </ui:define>
         </ui:composition>

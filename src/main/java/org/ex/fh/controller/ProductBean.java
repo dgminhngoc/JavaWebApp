@@ -74,9 +74,7 @@ public class ProductBean implements Serializable {
         
         return selectedCategory;
     }
-    
-   
-    
+       
     public void addToCart() {
         ProductCart.getInstance().addToCart(listProductPurchase);
         listProductPurchase.clear();

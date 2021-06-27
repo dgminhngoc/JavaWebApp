@@ -12,11 +12,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
 import org.ex.fh.model.Product;
-import org.ex.fh.model.ProductCategory;
 import util.DbAPIBean;
 
 /**
@@ -65,5 +62,16 @@ public class ProductEditBean implements Serializable {
 
     public Date getDate() {
         return date;
+    }
+    
+    public void doSubmitChange() {
+        boolean success = dbAPIBean.updateProduct(selectedProduct);
+        
+        if(success) {
+        
+        }
+        else {
+        
+        }
     }
 }

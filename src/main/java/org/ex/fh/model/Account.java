@@ -49,6 +49,10 @@ public class Account implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "ACC_PASSWORD")
     private String accPassword;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ACC_IS_ADMIN")
+    private boolean accIsAdmin;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -139,5 +143,13 @@ public class Account implements Serializable {
     @Override
     public String toString() {
         return "org.ex.fh.model.Account[ accId=" + accId + " ]";
+    }
+   
+    public boolean getAccIsAdmin() {
+        return accIsAdmin;
+    }
+
+    public void setAccIsAdmin(boolean accIsAdmin) {
+        this.accIsAdmin = accIsAdmin;
     }
 }

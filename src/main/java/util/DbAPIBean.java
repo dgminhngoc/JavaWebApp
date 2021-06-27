@@ -187,5 +187,30 @@ public class DbAPIBean {
         }
       
         return false;
-    } 
+    }
+    
+    public boolean updateProduct(Product product) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+            try {           
+                userTransaction.begin( );          
+                
+                userTransaction.commit( );
+
+                return true;
+            } 
+            catch (Exception e) {
+                System.out.println("updateProduct error: " + e.toString());
+                try {            
+                    userTransaction.rollback();
+                } 
+                catch (Exception ex) {
+                    //do nothing
+                }
+            }
+            finally{
+                entityManager.close();
+            }
+      
+        return false;
+    }
 }
