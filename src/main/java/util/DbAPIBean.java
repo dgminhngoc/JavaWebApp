@@ -46,6 +46,14 @@ public class DbAPIBean {
         return listProduct;
     }
     
+    public List<Product> findListAllProduct() {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        TypedQuery<Product> query = entityManager
+                .createNamedQuery("Product.findAll", Product.class);
+        List<Product> listProduct = query.getResultList();
+        return listProduct;
+    }
+    
     public List<ProductCategory> getListProductCategory() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         TypedQuery<ProductCategory> query = entityManager

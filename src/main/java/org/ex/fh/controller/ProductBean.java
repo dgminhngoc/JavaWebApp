@@ -75,15 +75,7 @@ public class ProductBean implements Serializable {
         return selectedCategory;
     }
     
-    public void reloadData(){
-        for(ProductCategory productCategory : listProductCategory) {
-            if(productCategory.getProductCatName().equals(selectedStrCategory)) {
-                selectedCategory = productCategory;
-                System.out.println("selectedCategory: " + selectedCategory.getProductCatName());
-                break;
-            }
-        }
-    }
+   
     
     public void addToCart() {
         ProductCart.getInstance().addToCart(listProductPurchase);

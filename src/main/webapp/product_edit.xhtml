@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    
+    <h:body>
+        <ui:composition template="WEB-INF/template/master.xhtml">
+            <ui:define name="menu">
+                <h:form>
+                   <u1>
+                       <li>
+                            <h:commandLink 
+                                value="Start" 
+                                action="#{navigateBean.navigateToStartScreen()}"/>
+                        </li>
+                    </u1>
+                </h:form>
+            </ui:define>
+            <ui:define name="content">
+                <h:form id="formId">                          
+                    <br/>
+                    <p:dataTable  id="products" 
+                                 value="#{productEditBean.listProduct}" 
+                                 var="product"
+                                 selectionMode="single"
+                                 rowKey="#{product.productId}"
+                                 selection="#{productEditBean.selectedProduct}"
+                                 scrollable="true" 
+                                 scrollHeight="300"
+                                 >
+                        <p:ajax event="rowSelect" 
+                                update="formId"/>
+                        <p:column>    				
+                           <f:facet name="header">Name</f:facet>    				
+                           #{product.productName}
+                        </p:column>
+                        <p:column>    				
+                           <f:facet name="header">Category</f:facet>    				
+                           #{product.fkProductCateId.productCatName}
+                        </p:column>
+                        <p:column>
+                           <f:facet name="header">Price</f:facet>
+                           #{product.productPrice}
+                        </p:column>
+                        
+                       
+                     </p:dataTable>
+                    
+                    <p:dialog header="Product Edit Dialog" widgetVar="dlg" modal="true">
+
+                        <p:panelGrid columns="4" layout="flex">
+                            <p:outputLabel for="iName" value="Name"/>
+                            <p:inputText id="iName" 
+                                         value="#{productEditBean.selectedProduct.productName}"/>
+
+                            <p:outputLabel for="iDesc" value="Description"/>
+                            <p:inputText id="iDesc"
+                                         value="#{productEditBean.selectedProduct.productDescription}"/>
+
+                            <p:outputLabel for="iPrice" value="Price"/>
+                            <p:inputText id="iPrice"
+                                         value="#{productEditBean.selectedProduct.productPrice}"/>
+
+                            <p:outputLabel for="selectOne" value="Category"/>
+                            <p:selectOneMenu id="selectOne">
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItem itemLabel="Xbox One" itemValue="Xbox One"/>
+                                <f:selectItem itemLabel="PS4" itemValue="PS4"/>
+                                <f:selectItem itemLabel="Wii U" itemValue="Wii U"/>
+                            </p:selectOneMenu>
+                            
+                            <p:outputLabel value="Price"/>
+                            <p:calendar value="#{productEditBean.date}"></p:calendar>
+                        </p:panelGrid>
+                        <p:commandButton value="Submit" 
+                                         onclick="PF('dlg').hide();"/>
+                    </p:dialog>
+                     <p:commandButton value="Edit" 
+                                         type="button"
+                                         id="btnEdit"
+                                         rendered="#{productEditBean.shouldShowBtnEdit}"
+                                         onclick="PF('dlg').show();"/>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

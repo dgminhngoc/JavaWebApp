@@ -31,13 +31,11 @@
                 <h:form>             
                     <p:outputLabel for="menu"/>
                     <p:selectOneMenu id="menu" value="#{productBean.selectedStrCategory}">
-                        <f:selectItems value="#{productBean.listStrCategory}"/>  
+                        <f:selectItems value="#{productBean.listStrCategory}"/>
+                        <p:ajax event="change" 
+                                update="products"/>
                     </p:selectOneMenu>
-                   
-                    <p:commandButton value="Load Data" 
-                                     action="#{productBean.reloadData()}"
-                                     update="products"/>   
-                    
+          
                     <p:commandButton value="Add to cart" 
                                      action="#{productBean.addToCart()}" 
                                      update="products">

@@ -46,6 +46,10 @@ public class NavigateBean implements Serializable {
         return "/product.xhtml";
     }
     
+    public String navigateToProductEditScreen() {
+        return "/product_edit.xhtml";
+    }
+    
     public String navigateToRegisterScreen() {
         return "/register.xhtml";
     }
