@@ -50,7 +50,7 @@
                         </p:column>
                         
                        
-                     </p:dataTable>
+                    </p:dataTable>
                     
                     <p:dialog header="Product Edit Dialog" widgetVar="dlg" modal="true"
                               style="max-height:400px;overflow:auto"
@@ -83,15 +83,15 @@
                         </p:panelGrid>
                            
                         <p:commandButton value="Submit" 
-                                         onclick="PF('dlg').hide();"/>
+                                         onclick="PF('dlg').hide();"
+                                         action="#{productEditBean.doSubmitChange()}"/>
                     </p:dialog>
-                     <p:commandButton value="Edit" 
-                                         type="button"
+                    <p:commandButton value="Edit"                                         
                                          id="btnEdit"
                                          rendered="#{productEditBean.shouldShowBtnEdit}"
                                          onclick="PF('dlg').show();"
-                                         action="#{productEditBean.doSubmitChange()}/>
-                </h:form>
+                                         />      
+                </h:form> 
             </ui:define>
         </ui:composition>
     </h:body>
