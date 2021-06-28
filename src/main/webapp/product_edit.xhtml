@@ -71,15 +71,13 @@
                                          value="#{productEditBean.selectedProduct.productPrice}"/>
 
                             <p:outputLabel for="selectOne" value="Category"/>
-                            <p:selectOneMenu id="selectOne">
-                                <f:selectItem itemLabel="Select One" itemValue=""/>
-                                <f:selectItem itemLabel="Xbox One" itemValue="Xbox One"/>
-                                <f:selectItem itemLabel="PS4" itemValue="PS4"/>
-                                <f:selectItem itemLabel="Wii U" itemValue="Wii U"/>
+                            <p:selectOneMenu id="selectOne"
+                                             value="#{productEditBean.selectedStrCategory}">
+                                <f:selectItems value="#{productEditBean.listStrCategory}"/>
                             </p:selectOneMenu>
                             
                             <p:outputLabel value="Price"/>
-                            <p:calendar value="#{productEditBean.date}"></p:calendar>
+                            <p:calendar value="#{productEditBean.editDate}"></p:calendar>
                         </p:panelGrid>
                            
                         <p:commandButton value="Submit" 
