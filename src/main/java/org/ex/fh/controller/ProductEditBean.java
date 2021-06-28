@@ -47,9 +47,9 @@ public class ProductEditBean implements Serializable {
     private void init(){
         listProduct = dbAPIBean.findListAllProduct();  
         listProductCategory = dbAPIBean.getListProductCategory();
-        for(ProductCategory productCategory : listProductCategory) {
+        listProductCategory.forEach(productCategory -> {
             listStrCategory.add(productCategory.getProductCatName());
-        }
+        });
     }
    
     public List<Product> getListProduct() {         
@@ -111,8 +111,7 @@ public class ProductEditBean implements Serializable {
         
         boolean success = dbAPIBean.updateProduct(selectedProduct);
         if(success) {
-            System.out.println("doSubmitChange success");
-            
+            System.out.println("doSubmitChange success");    
             return "product_edit?faces-redirect=true";
         }
         else {

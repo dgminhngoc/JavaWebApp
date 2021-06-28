@@ -42,26 +42,28 @@
                         
                     </p:commandButton>
                     <br/>
-                    <h:dataTable id="products" 
+                    <p:dataTable id="products" 
                                  value="#{productBean.listProductPurchase}" 
-                                 var="productPurchase">
-                        <h:column>    				
+                                 var="productPurchase"
+                                 scrollable="true" 
+                                 scrollHeight="300">
+                        <p:column>    				
                            <f:facet name="header">Name</f:facet>    				
                            #{productPurchase.product.productName}
-                        </h:column>
-                        <h:column>    				
+                        </p:column>
+                        <p:column>    				
                            <f:facet name="header">Description</f:facet>    				
                            #{productPurchase.product.productDescription}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                            <f:facet name="header">Price</f:facet>
                            #{productPurchase.product.productPrice}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                            <f:facet name="header">Amount</f:facet>
                            <h:inputText id="numberOfItem" value="#{productPurchase.numberOfItem}"/>
-                        </h:column>  
-                     </h:dataTable>
+                        </p:column>  
+                     </p:dataTable>
                 </h:form>
             </ui:define>
         </ui:composition>

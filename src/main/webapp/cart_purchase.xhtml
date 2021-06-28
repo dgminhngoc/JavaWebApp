@@ -28,20 +28,20 @@
                     <br/>
                     <h:outputText value="Total price: #{productCartPurchaseBean.totalPrice}"/>
                     <br/>  
-                    <h:dataTable id="products" value="#{productCartPurchaseBean.listProductPurchase}" var="productPurchase">
-                        <h:column>    				
+                    <p:dataTable id="products" value="#{productCartPurchaseBean.listProductPurchase}" var="productPurchase">
+                        <p:column>    				
                            <f:facet name="header">Name</f:facet>    				
                            #{productPurchase.product.productName}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                            <f:facet name="header">Price</f:facet>
                            #{productPurchase.product.productPrice}
-                        </h:column>
-                        <h:column>
+                        </p:column>
+                        <p:column>
                            <f:facet name="header">Amount</f:facet>
                            <h:outputText id="numberOfItem" value="#{productPurchase.numberOfItem}"/>
-                        </h:column>  
-                     </h:dataTable>
+                        </p:column>  
+                     </p:dataTable>
                     <br/>
                     <p:commandButton value="Purchase" action="#{productCartPurchaseBean.purchase()}"/>        
                 </h:form>
@@ -49,4 +49,3 @@
         </ui:composition>
     </h:body>
 </html>
-
