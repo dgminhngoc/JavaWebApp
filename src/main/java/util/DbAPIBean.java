@@ -22,6 +22,7 @@ import org.ex.fh.model.Product;
 import org.ex.fh.model.ProductCategory;
 import org.ex.fh.model.ProductPurchase;
 import org.ex.fh.model.User;
+import org.ex.fh.model.Worker;
 
 /**
  *
@@ -190,9 +191,11 @@ public class DbAPIBean {
     }
     
     public boolean updateProduct(Product product) {
+        System.out.println("updateProduct");       
         EntityManager entityManager = entityManagerFactory.createEntityManager();
             try {           
                 userTransaction.begin( );
+                entityManager.joinTransaction();
                 entityManager.merge(product);;
                 userTransaction.commit( );           
 
@@ -200,7 +203,10 @@ public class DbAPIBean {
             } 
             catch (Exception e) {
                 System.out.println("updateProduct error: " + e.toString());
-            }        
+            }
+            finally{
+                entityManager.close();
+            }
       
         return false;
     }

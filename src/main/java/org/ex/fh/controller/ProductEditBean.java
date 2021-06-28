@@ -71,7 +71,7 @@ public class ProductEditBean implements Serializable {
     public void doSubmitChange() {
         selectedProduct.setProductChangeDate(date);
         boolean success = dbAPIBean.updateProduct(selectedProduct);
-        
+        //boolean success = dbAPIBean.updateWorker();
         if(success) {
             System.out.println("doSubmitChange success");
         }

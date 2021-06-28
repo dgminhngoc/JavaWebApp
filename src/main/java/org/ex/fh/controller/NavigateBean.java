@@ -30,7 +30,12 @@ public class NavigateBean implements Serializable {
             return "/start.xhtml";
         }
         else {
-            return "/home.xhtml";
+            if(AppInfo.getInstance().getAccount().getAccIsAdmin()) {
+                return "/home_admin.xhtml";
+            }
+            else {
+                return "/home.xhtml";
+            }         
         } 
     }
     
