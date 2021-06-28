@@ -30,7 +30,7 @@ public class ProductBean implements Serializable {
     private DbAPIBean dbAPIBean;
     
     private List<ProductPurchase> listProductPurchase = new ArrayList<>();
-    private List<ProductCategory> listProductCategory = new ArrayList<>();;
+    private List<ProductCategory> listProductCategory = new ArrayList<>();
     
     private List<String> listStrCategory = new ArrayList<>();
     private String selectedStrCategory;

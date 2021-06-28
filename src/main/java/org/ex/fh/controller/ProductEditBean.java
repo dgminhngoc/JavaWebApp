@@ -14,6 +14,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.ex.fh.model.Product;
+import org.ex.fh.model.ProductCategory;
 import util.DbAPIBean;
 
 /**
@@ -30,7 +31,11 @@ public class ProductEditBean implements Serializable {
     private List<Product> listProduct = new ArrayList<>();    
     private Product selectedProduct;
     private boolean shouldShowBtnEdit = false;
-    private Date date = new Date();
+    private Date editDate = new Date();
+    
+    private List<ProductCategory> listProductCategory = new ArrayList<>();
+    private List<String> listStrCategory = new ArrayList<>();
+    private String selectedStrCategory;
     /**
      * Creates a new instance of ServiceBean
      */
@@ -40,7 +45,11 @@ public class ProductEditBean implements Serializable {
     
     @PostConstruct
     private void init(){
-        listProduct = dbAPIBean.findListAllProduct();       
+        listProduct = dbAPIBean.findListAllProduct();  
+        listProductCategory = dbAPIBean.getListProductCategory();
+        for(ProductCategory productCategory : listProductCategory) {
+            listStrCategory.add(productCategory.getProductCatName());
+        }
     }
    
     public List<Product> getListProduct() {         
@@ -60,23 +69,55 @@ public class ProductEditBean implements Serializable {
         return shouldShowBtnEdit;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEditDate() {
+        return editDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setEditDate(Date date) {
+        this.editDate = date;
+    }
+
+    public List<String> getListStrCategory() {
+        if(selectedProduct != null) {
+            setSelectedStrCategory(selectedProduct.getFkProductCateId().getProductCatName());
+        }
+        
+        return listStrCategory;
+    }
+
+    public void setListStrCategory(List<String> listStrCategory) {
+        this.listStrCategory = listStrCategory;
+    }
+
+    public String getSelectedStrCategory() {
+        return selectedStrCategory;
+    }
+
+    public void setSelectedStrCategory(String selectedStrCategory) {
+        this.selectedStrCategory = selectedStrCategory;
     }
    
-    public void doSubmitChange() {
-        selectedProduct.setProductChangeDate(date);
+    public String doSubmitChange() {
+        ProductCategory selectedCategory = selectedProduct.getFkProductCateId();
+        for(ProductCategory productCategory : listProductCategory) {
+            if(productCategory.getProductCatName().equals(selectedStrCategory)) {
+                selectedCategory = productCategory;
+                break;
+            }
+        }
+        
+        selectedProduct.setProductChangeDate(editDate);
+        selectedProduct.setFkProductCateId(selectedCategory);
+        
         boolean success = dbAPIBean.updateProduct(selectedProduct);
-        //boolean success = dbAPIBean.updateWorker();
         if(success) {
             System.out.println("doSubmitChange success");
+            
+            return "product_edit?faces-redirect=true";
         }
         else {
             System.out.println("doSubmitChange NOT success");
+            return "product_edit";
         }
     }
 }
