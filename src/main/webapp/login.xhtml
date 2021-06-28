@@ -26,7 +26,7 @@
             
             <ui:define name="content">
                 <h:form>
-                    <h:panelGrid id = "panel" columns = "2" border = "1"
+                    <h:panelGrid id = "panel" columns = "3" border = "1"
                         cellpadding = "10" cellspacing = "1"
                         style="margin:0px auto;" >
    
@@ -37,10 +37,12 @@
                         <h:inputText id="username" value="#{loginBean.username}">
                              <f:validator validatorId="StandardValidator"/>
                         </h:inputText>
+                        <h:message for = "username" style = "color:red" />   
                         <h:outputLabel value = "Password" />
                         <h:inputSecret id="password" value="#{loginBean.password}">
                              <f:validator validatorId="StandardValidator"/>
                         </h:inputSecret>
+                         <h:message for = "password" style = "color:red" />
                         <f:facet name = "footer">
                            <h:panelGroup style = "display:block; text-align:center">
                               <h:commandButton 
@@ -50,9 +52,6 @@
                            </h:panelGroup>
                         </f:facet>
                     </h:panelGrid>
-                <h:message for = "username" style = "color:red" />   
-                <br/>
-                <h:message for = "password" style = "color:red" />
                 </h:form>
             </ui:define>
         </ui:composition>

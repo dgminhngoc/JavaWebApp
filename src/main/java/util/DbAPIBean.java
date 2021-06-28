@@ -192,24 +192,15 @@ public class DbAPIBean {
     public boolean updateProduct(Product product) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
             try {           
-                userTransaction.begin( );          
-                
-                userTransaction.commit( );
+                userTransaction.begin( );
+                entityManager.merge(product);;
+                userTransaction.commit( );           
 
                 return true;
             } 
             catch (Exception e) {
                 System.out.println("updateProduct error: " + e.toString());
-                try {            
-                    userTransaction.rollback();
-                } 
-                catch (Exception ex) {
-                    //do nothing
-                }
-            }
-            finally{
-                entityManager.close();
-            }
+            }        
       
         return false;
     }

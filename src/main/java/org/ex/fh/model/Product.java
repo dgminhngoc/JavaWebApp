@@ -8,6 +8,7 @@ package org.ex.fh.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -22,6 +23,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -55,10 +58,16 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_DESCRIPTION")
     private String productDescription;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Column(name = "PRODUCT_PRICE")
     private BigDecimal productPrice;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "PRODUCT_CHANGE_DATE")
+    @Temporal(TemporalType.DATE)
+    private Date productChangeDate;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -181,4 +190,12 @@ public class Product implements Serializable {
     public String toString() {
         return "org.ex.fh.model.Product[ productId=" + productId + " ]";
     }   
+
+    public Date getProductChangeDate() {
+        return productChangeDate;
+    }
+
+    public void setProductChangeDate(Date productChangeDate) {
+        this.productChangeDate = productChangeDate;
+    }
 }
