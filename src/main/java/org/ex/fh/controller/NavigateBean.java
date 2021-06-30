@@ -29,7 +29,9 @@ public class NavigateBean implements Serializable {
         if(AppInfo.getInstance().getUser() == null) {
             return "/start.xhtml";
         }
+        //if user is logged-in, he must be navigate to home screen
         else {
+            //only admin can see edit option
             if(AppInfo.getInstance().getAccount().getAccIsAdmin()) {
                 return "/home_admin.xhtml";
             }
