@@ -111,11 +111,9 @@ public class ProductEditBean implements Serializable {
         
         boolean success = dbAPIBean.updateProduct(selectedProduct);
         if(success) {
-            System.out.println("doSubmitChange success");    
             return "product_edit?faces-redirect=true";
         }
         else {
-            System.out.println("doSubmitChange NOT success");
             return "product_edit";
         }
     }

@@ -45,6 +45,7 @@ public class ProductCartBean implements Serializable {
         return totalPrice;
     }
     
+    //user can only purchase after login
     public String confirm() {
         //user is already logged in
         if(AppInfo.getInstance().getUser() != null) {  

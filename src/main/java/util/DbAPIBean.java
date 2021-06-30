@@ -22,7 +22,6 @@ import org.ex.fh.model.Product;
 import org.ex.fh.model.ProductCategory;
 import org.ex.fh.model.ProductPurchase;
 import org.ex.fh.model.User;
-import org.ex.fh.model.Worker;
 
 /**
  *

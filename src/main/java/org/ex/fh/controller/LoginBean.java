@@ -60,9 +60,7 @@ public class LoginBean implements Serializable {
         this.message = message;
     }
     
-    public String doLogin(){
-        System.out.println("LoginBean");
-        
+    public String doLogin(){        
         boolean isAccountValid = false;
         Account account = dbAPIBean.findAccount(username);
         if (account != null && account.getAccId() != null) {
@@ -83,6 +81,7 @@ public class LoginBean implements Serializable {
             FacesMessage fmsg = new FacesMessage(message);
             FacesContext.getCurrentInstance().addMessage("halloForm", fmsg);
 
+            //only admin can see edit option
             if(account.getAccIsAdmin()) {
                 return "/home_admin.xhtml";
             }

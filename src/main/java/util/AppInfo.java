@@ -11,6 +11,9 @@ import org.ex.fh.model.User;
  *
  * @author dgmin
  */
+
+//store current user's and account's info of session
+//singleton is used to make sure only ONE instance is created
 public class AppInfo {
     private static AppInfo instance;
     

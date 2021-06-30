@@ -14,6 +14,8 @@ import org.ex.fh.model.ProductPurchase;
  *
  * @author dgmin
  */
+//store all selected products that user want to buy
+//singleton is used to make sure only ONE instance is created
 public class ProductCart {
         
     private static ProductCart instance;
@@ -49,6 +51,8 @@ public class ProductCart {
         return totalPrice;
     } 
     
+    //update current cart
+    //if a product is already available, its number must be updated instead of adding to list
     public void addToCart(List<ProductPurchase> newListProductPurchase) {
         if(newListProductPurchase != null) {
             for(ProductPurchase newProductPurchase : newListProductPurchase) {  
